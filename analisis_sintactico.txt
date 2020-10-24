@@ -1,0 +1,110 @@
+
+programa 	: variables subprogramas instrucciones 
+	;
+
+//=============================   variables  ===============================================
+
+variables 	: VARIABLES (vars COLON tipo PyC)*
+	;
+
+vars 		:  VAR COMA vars
+		| VAR
+	;
+
+tipo		: elemental | no_elemental
+	;
+
+elemtental	: NUM | LOG
+	;
+
+no_elemental: SEQ PA elemental PC                              // SEQ(NUM) ???? O SEQ ?????Ambas son viables, dependerá si se trata como un bloque o no.
+	;
+
+
+//==============================  subprogramas  =============================================
+
+subprogramas 	: SUBPROGRAMAS (funciones | procedimientos)*
+	;
+
+//La función tiene un conjunto (posiblemente vacío) de parámetros de entrada y un conjunto (no vacío) de parámetros de salida.
+//Los parámetros de entrada son parámetros de sólo lectura y los parámetros de salida de lectura/escritura.
+//La función debe incluir en algún punto de sus instrucciones un retorno explícito de los parámetros de salida (instrucción dev).
+
+funciones 	: FUNCION (VAR PA param_func_e PC DEV PA param_func_s PC PyC)*
+
+param_func_e	: tipo VAR COMA param_func_e
+		  | tipo VAR
+		  | ()  //¿Como se expresa el vacio?   vacio === () | ()?
+	;
+
+//El procedimiento tiene un conjunto (posiblemente vacío) de parámetros de entrada y salida.
+// No hay devolución explícita de resultados (no debe usarse la instrucción dev).
+
+procedimientos	: PROCEDIMIENTO (VAR PA parametros_proc PC PYC)*
+	;
+
+parametros_proc	: tipo VAR COMA parametros_proc
+		  | (tipo VAR)? 
+	;
+		
+
+//===================================== INSTRUCCIONES ================================================
+
+//Las instrucciones de P son: asignación, condicional, iteración, ruptura de control, llamada a procedimiento o función, devolución de resultados de una función, mostrar por consola el valor de variables y aserto. 
+//El lenguaje P también dispone de comentarios de línea (//) y de bloque (/* */)  ---> Se declará en análisis léxico
+
+instrucciones	: INSTRUCCIONES (instruccion PyC)*
+	;
+
+instruccion	: (asignacion | condicional | iteracion |  rupturaControl | llamadaPoF | functionReturn | printConsola | aserto)
+	;
+
+asignacion	: ident_asign ASIGN expr_asign PyC
+	;
+
+ident_asign	: VAR COMA ident_asign
+		  | VAR
+	;
+
+
+expr_asign	: (expr_int | expr_log | expr_seq )
+	;
+
+expr_int	: NUM
+		 |VAR
+		 |expr_int COMA expr_int                          //SE puede juntar con la de abajo? :S
+		 | expr_int (POR | MAS | MENOS ) expr_int
+	;
+
+expr_log	: LOG
+		 |VAR
+	;
+
+expr_seq	: VAR
+		 | CA (contenido_seq)? CC
+	;
+
+contenido_seq	: expr_int (COMA expr_int)*
+		 |expr_log (COMA expr_log)*
+	;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
