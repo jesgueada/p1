@@ -26,9 +26,6 @@ no_elemental: SEQ PA elemental PC                              // SEQ(NUM) ???? 
 subprogramas 	: SUBPROGRAMAS (funciones | procedimientos)*
 	;
 
-//La función tiene un conjunto (posiblemente vacío) de parámetros de entrada y un conjunto (no vacío) de parámetros de salida.
-//Los parámetros de entrada son parámetros de sólo lectura y los parámetros de salida de lectura/escritura.
-//La función debe incluir en algún punto de sus instrucciones un retorno explícito de los parámetros de salida (instrucción dev).
 
 funciones 	: FUNCION (VAR PA param_func_e PC DEV PA param_func_s PC PyC)*
 
@@ -37,8 +34,6 @@ param_func_e	: tipo VAR COMA param_func_e
 		  | ()  //¿Como se expresa el vacio?   vacio === () | ()?
 	;
 
-//El procedimiento tiene un conjunto (posiblemente vacío) de parámetros de entrada y salida.
-// No hay devolución explícita de resultados (no debe usarse la instrucción dev).
 
 procedimientos	: PROCEDIMIENTO (VAR PA parametros_proc PC PYC)*
 	;
@@ -50,16 +45,15 @@ parametros_proc	: tipo VAR COMA parametros_proc
 
 //===================================== INSTRUCCIONES ================================================
 
-//Las instrucciones de P son: asignación, condicional, iteración, ruptura de control, llamada a procedimiento o función, devolución de resultados de una función, mostrar por consola el valor de variables y aserto. 
 //El lenguaje P también dispone de comentarios de línea (//) y de bloque (/* */)  ---> Se declará en análisis léxico
 
 instrucciones	: INSTRUCCIONES (instruccion PyC)*
 	;
 
-instruccion	: (asignacion | condicional | iteracion |  rupturaControl | llamadaPoF | functionReturn | printConsola | aserto)
+instruccion	: (asignacion | condicional | iteracion |  ruptura | llamadaPoF | functionReturn | printConsola | aserto)
 	;
 
-asignacion	: ident_asign ASIGN expr_asign PyC
+asignacion	: (ident_asign ASIGN expr_asign PyC)*
 	;
 
 ident_asign	: VAR COMA ident_asign
@@ -71,25 +65,57 @@ expr_asign	: (expr_int | expr_log | expr_seq )
 	;
 
 expr_int	: NUM
-		 |VAR
-		 |expr_int COMA expr_int                          //SE puede juntar con la de abajo? :S
-		 | expr_int (POR | MAS | MENOS ) expr_int
+		     |VAR
+		     |VAR CA expr_int CC                        //s[i+1]
+		     |expr_int COMA expr_int
+		     | expr_int (POR | MAS | MENOS ) expr_int
 	;
 
-expr_log	: LOG
-		 |VAR
+expr_log	: (TRUE | FALSE)
+		      |VAR
 	;
 
 expr_seq	: VAR
-		 | CA (contenido_seq)? CC
+		     | CA (contenido_seq)? CC
 	;
 
 contenido_seq	: expr_int (COMA expr_int)*
-		 |expr_log (COMA expr_log)*
+		         |expr_log (COMA expr_log)*
 	;
 
 
 
+
+//CONDICIONAL
+
+condicional	: (SI PA condicion PC ENTONCES asignacion (SINO asignacion)? FSI)*			//asignacion se puede?  var = funcion ???
+	;
+
+condicion	: var1_cond op_log_cond var2_cond ((AND | OR | NOT) condicion)?       //(....) ?  : concatenar condiciones
+	;
+
+var1_cond	: VAR
+		 | NUM
+		 | VAR CA ind_seq CC
+	;
+
+ind_seq		: NUM
+		 | VAR
+		 | ind_seq (POR | MAS | MENOS) ind_seq
+	;
+
+
+op_log_cond	: ( IGUALDAD | DESIGUALDAD | MENOR | MAYOR | MENORQUE | MAYORQUE )
+	;
+
+
+
+//ITERACION
+
+
+iteracion	: MIENTRAS PA condicion PC HACER (asignacion | condicional)* FMIENTRAS
+
+//RUPTURA
 
 
 
