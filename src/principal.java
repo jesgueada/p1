@@ -8,7 +8,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import javax.swing.*;
 import java.util.Arrays;
 
-public class Principal {
+public class principal {
     public static void main(String[] args) throws Exception{
         CharStream input = CharStreams.fromFileName(args[0]);
         Analex analex = new Analex(input);
@@ -25,5 +25,7 @@ public class Principal {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,400);
         frame.setVisible(true);
+
+
     }
 }
