@@ -47,8 +47,7 @@ expr_arit: expr1 (MAS | MENOS) expr_arit
 expr1: expr2 (POR|DIV) expr1
  |expr2 ;
 
-expr2: NUM CA expr_arit CC
- | NUM | IDENT | PA expr_arit PC | MENOS expr_arit | funciones | sec_elementos;
+expr2: NUM CA expr_arit CC | PA expr_arit PC | MENOS expr_arit | funciones | sec_elementos | NUM | IDENT ;
 
 funciones: IDENT PA (vars | NUM | tipoLog) PC;
 
