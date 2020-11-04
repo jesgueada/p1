@@ -1,4 +1,4 @@
-//asas
+
 programa 	: variables subprogramas instrucciones 
 	;
 
@@ -8,16 +8,16 @@ variables 	: VARIABLES (vars COLON tipo PyC)*
 	;
 
 vars 		:  VAR COMA vars
-		| VAR
+			 | VAR
 	;
 
 tipo		: elemental | no_elemental
 	;
 
-elemtental	: NUM | LOG
+elemental	: NUM | LOG
 	;
 
-no_elemental: SEQ PA elemental PC                              // SEQ(NUM) ???? O SEQ ?????Ambas son viables, dependerá si se trata como un bloque o no.
+no_elemental: SEQ PA elemental PC                              
 	;
 
 
@@ -27,11 +27,15 @@ subprogramas 	: SUBPROGRAMAS (funciones | procedimientos)*
 	;
 
 
-funciones 	: FUNCION (VAR PA param_func_e PC DEV PA param_func_s PC PyC)*
+funciones 	: FUNCION (VAR PA param_func_e PC DEV PA param_func_s PC PyC)*       // VAR ESTÁ MAL SERIA OTRO LEX COMO IDENT_F????
 
 param_func_e	: tipo VAR COMA param_func_e
-		  | tipo VAR
-		  | ()  //¿Como se expresa el vacio?   vacio === () | ()?
+					| tipo VAR
+					| ()
+					
+	;
+param_func_s	: tipo VAR COMA param_func_e
+					| tipo VAR
 	;
 
 
@@ -39,7 +43,7 @@ procedimientos	: PROCEDIMIENTO (VAR PA parametros_proc PC PYC)*
 	;
 
 parametros_proc	: tipo VAR COMA parametros_proc
-		  | (tipo VAR)? 
+				 | (tipo VAR)? 
 	;
 		
 
@@ -47,7 +51,7 @@ parametros_proc	: tipo VAR COMA parametros_proc
 
 //El lenguaje P también dispone de comentarios de línea (//) y de bloque (/* */)  ---> Se declará en análisis léxico
 
-instrucciones	: INSTRUCCIONES (instruccion PyC)*
+instrucciones	: INSTRUCCIONES (instruccion)*
 	;
 
 instruccion	: (asignacion | condicional | iteracion |  ruptura | llamadaPoF | functionReturn | printConsola | aserto)
@@ -57,7 +61,7 @@ asignacion	: (ident_asign ASIGN expr_asign PyC)*
 	;
 
 ident_asign	: VAR COMA ident_asign
-		  | VAR
+			 | VAR
 	;
 
 
@@ -67,11 +71,11 @@ expr_asign	: (expr_int | expr_log | expr_seq )
 expr_int	: NUM
 		     |VAR
 		     |VAR CA expr_int CC                        //s[i+1]
-		     |expr_int COMA expr_int
+		     |expr_int COMA expr_int					//asignacion multiple
 		     | expr_int (POR | MAS | MENOS ) expr_int
 	;
 
-expr_log	: (TRUE | FALSE)
+expr_log	: (CIERTO | FALSO)
 		      |VAR
 	;
 
@@ -79,8 +83,8 @@ expr_seq	: VAR
 		     | CA (contenido_seq)? CC
 	;
 
-contenido_seq	: expr_int (COMA expr_int)*
-		         |expr_log (COMA expr_log)*
+contenido_seq	: NUM (COMA NUM)*					//No dice nada de asig multiple para seq
+		         |LOG (COMA LOG)*
 	;
 
 
@@ -88,24 +92,29 @@ contenido_seq	: expr_int (COMA expr_int)*
 
 //CONDICIONAL
 
-condicional	: (SI PA condicion PC ENTONCES asignacion (SINO asignacion)? FSI)*			//asignacion se puede?  var = funcion ???
+condicional	: (SI PA condicion PC ENTONCES asignacion (SINO asignacion)? FSI)*			//asignacion se puede?
 	;
 
-condicion	: var1_cond op_log_cond var2_cond ((AND | OR | NOT) condicion)?       //(....) ?  : concatenar condiciones
+condicion	: comparador_izq operadores_log comparador_der ((AND | OR | NOT) condicion)?       //(....) ?  : concatenar condiciones
 	;
 
-var1_cond	: VAR
-		 | NUM
-		 | VAR CA ind_seq CC
+comparador_izq	: VAR
+				 | NUM
+				 | VAR CA indice CC
+	;
+	
+comparador_der	: NUM
+				 |LOG
+				 |VAR
 	;
 
-ind_seq		: NUM
-		 | VAR
-		 | ind_seq (POR | MAS | MENOS) ind_seq
+indice		: NUM
+			 | VAR
+			 | indice (POR | MAS | MENOS) indice
 	;
 
 
-op_log_cond	: ( IGUALDAD | DESIGUALDAD | MENOR | MAYOR | MENORQUE | MAYORQUE )
+operadores_log	: ( IGUALDAD | DESIGUALDAD | MENOR | MAYOR | MENORQUE | MAYORQUE )
 	;
 
 
