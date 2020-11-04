@@ -40,13 +40,15 @@ tipoInstruccion: (asignacion | condiciones | iteracion | ruptura | mostrar );
 
 asignacion: tipoAsignacion (COMA asignacion)?;
 
-tipoAsignacion: NUM | funciones | expreciones | sec_elementos;
+tipoAsignacion: NUM | funciones | expr_arit | sec_elementos;
 funciones: IDENT PA (vars | NUM | tipoLog) PC;
-expreciones: exprecionAux;
 
+tipoLog: T | F;
+
+expr_arit: exprecionAux;
 exprecionAux: MENOS? (NUM | IDENT | PA exprecionAux PC)
               |exprecionAux (MAS | MENOS |POR |DIV) exprecionAux;
-tipoLog: T | F;
+
 
 sec_elementos: CA CC | CA sec_elem CC;//Lista vacia y lista no vacia
 sec_elem: NUM (COMA sec_elem)?;
@@ -56,7 +58,7 @@ expr_cond: condicion
             | NEGACION expr_cond
             |expr_cond (CONJUNCION | DISYUNCION) expr_cond;
 condicion: tipo_cond (operadorLog)?;
-tipo_cond: expreciones
+tipo_cond: expr_arit
            |sec_elementos
            |funciones;
 
@@ -64,9 +66,9 @@ sino: SINO (asignacion | dev)*;
 operadorLog:(MAYOR | MENOR| IGUAL | DISTINTO | MENORIGUAL | MAYORIGUAL);
 dev: DEV vars PyC
    | DEV tipoLog PyC;
-iteracion:;
-ruptura:;
-mostrar:;
+iteracion: MIENTRAS PA expr_cond PC HACER (tipoInstruccion) FMIENTRAS;
+ruptura: MIENTRAS PA expr_cond PC HACER RUPTURA FMIENTRAS;
+mostrar: MOSTRAR PA vars PC PyC;
 
 
 

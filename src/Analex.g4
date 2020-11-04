@@ -63,6 +63,7 @@ FALSO: 'F';
 
  MIENTRAS: 'mientras';
  FMIENTRAS: 'fmientras';
+ HACER: 'hacer';
 
 
  COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
