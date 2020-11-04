@@ -12,10 +12,16 @@
 
 CIERTO: 'T';
 FALSO: 'F';
+
 NUM: 'NUM';
 LOG: 'LOG';
 SEQ: 'SEQ';
-//ASIG: ':';
+//VAR
+
+NUMERO : ('-')?DIGITO+;
+IDENT : LETRA(LETRA|DIGITO)*;
+
+ /*
  ENTERO: 'entero';
  BOOLEANO: 'booleano';
  Y: 'O';
@@ -23,20 +29,43 @@ SEQ: 'SEQ';
  NO: 'NO';
  NUMERO : ('-')?DIGITO+;
  IDENT : LETRA(LETRA|DIGITO)*;
+ */
+ 
+ //SUBPROGRAMAS
+//FUNCION
+//DEV
+//PROCEDIMIENTO
+//INSTRUCCIONES
+
+//SI
+//ENTONCES
+//SINO
+//FSI
+//MIENTRAS
+//HACER
+//FMIENTRAS
+ 
  PA : '(';
  PC : ')';
  CA: '[';
  CC: ']';
  PyC : ';';
  COMA : ',';
- ASIG: '=';
+ COLON: ':';
+ ASIGN: '=';
+ 
  MAYOR: '>';
+ MAYORIGUAL: '>=';
  MENOR: '<';
+ MENORIGUAL: '<=';
  IGUAL: '==';
+ DESIGUAL: '!=';
+ 
  MAS: '+';
  MENOS: '-';
  POR: '*';
  DIV: '/';
+ 
  COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
  COMENTARIO_LINEA : '//' .*? FIN_LINEA -> skip ;
 
