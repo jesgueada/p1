@@ -35,20 +35,24 @@ procedimientoAux: IDENT PA ( parametro)? PC;
 
 //INSTRUCCIONES
 
-instrucciones: INSTRUCCIONES (tipoInstruccion); //si es asignacion, condicional, iteracion, ruptura de control,dev resultados, mostrar por consola y aserto
-tipoInstruccion: (asignacion | condiciones | iteracion | ruptura | mostrar );
+instrucciones: INSTRUCCIONES (tipoInstruccion)*; //si es asignacion, condicional, iteracion, ruptura de control,dev resultados, mostrar por consola y aserto
+tipoInstruccion: (asignaciones | condiciones | iteracion | ruptura | mostrar );
 
-asignacion: tipoAsignacion (COMA asignacion)?;
+asignaciones: ASIGNACIONES (asignacion)*;
 
-tipoAsignacion: NUM | funciones | expr_arit | sec_elementos;
+asignacion: IDENT ASIG expr_arit PyC;
+expr_arit: expr1 (MAS | MENOS) expr_arit
+ | expr1 ;
+
+expr1: expr2 (POR|DIV) expr1
+ |expr2 ;
+
+expr2: NUM CA expr_arit CC
+ | NUM | IDENT | PA expr_arit PC | MENOS expr_arit | funciones | sec_elementos;
+
 funciones: IDENT PA (vars | NUM | tipoLog) PC;
 
 tipoLog: T | F;
-
-expr_arit: exprecionAux;
-exprecionAux: MENOS? (NUM | IDENT | PA exprecionAux PC)
-              |exprecionAux (MAS | MENOS |POR |DIV) exprecionAux;
-
 
 sec_elementos: CA CC | CA sec_elem CC;//Lista vacia y lista no vacia
 sec_elem: NUM (COMA sec_elem)?;
