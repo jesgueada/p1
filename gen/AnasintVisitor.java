@@ -1,4 +1,4 @@
-// Generated from C:/Users/admin/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/lolim/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -10,11 +10,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link Anasint#sentencia}.
+	 * Visit a parse tree produced by {@link Anasint#programa}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSentencia(Anasint.SentenciaContext ctx);
+	T visitPrograma(Anasint.ProgramaContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree

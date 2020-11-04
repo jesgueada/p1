@@ -4,34 +4,54 @@ options{
     tokenVocab=Analex;
 }
 
-sentencia : variables expr EOF;
+programa : PROGRAMA expr EOF;
 
-variables : decl_vars PyC ;
+variables : VARIABLES (decl_vars) * ;
 
-tipo: ENTERO
-    | BOOLEANO
-    ;
 
-decl_vars : IDENT tipo COMA decl_vars
-          | IDENT tipo
-          ;
-expr : expr1 (Y expr | O expr)  #Expr_Y_O
-     | NO expr                  #Expr_NO
-     | expr1                    #Rel
-     ;
+vars: IDENT (COMA vars)?;// ej: int a,b,c;
 
-expr1 : expr2 (MAYOR expr2 | MENOR expr2 | IGUAL expr2)  #Rel_MAYOR_MENOR_IGUAL
-      | expr2                                            #Term
-      ;
+tipo: NUM
+    | LOG
+    |SEQ PA tipo PC;
 
-expr2 : expr3 (MAS expr2 | MENOS expr2 | POR expr2)  #Term_MAS_MENOS_POR
-      | expr3 (DIV expr2)                            #Term_DIV
-      | expr3                                        #Term_Base
-      ;
+decl_vars : tipo vars PyC
+          | vars DP tipo PyC;//ej --> s.SEQ(NUM)
 
-expr3 :  IDENT      #Id
-      | NUMERO      #Num
-      | CIERTO      #T
-      | FALSO       #F
-      | PA expr PC  #ParExpr
-      ;
+//SUBPROGRAMAS
+subprogramas: SUBPROGRAMAS (funcionOpredicado | procedimiento)*;
+
+funcionOpredicado: funcion | predicado;
+funcion: FUNCION funcionAux variables instrucciones DEV vars PyC FFUNCION ;
+funcionAux: IDENT PA (parametro)? PC DEV PA parametro PC;
+parametro: tipo IDENT (COMA parametro)?;
+
+predicado: FUNCION predicadoAux variables instrucciones (DEV tipoLog PyC)? FFUNCION;
+predicadoAux: IDENT PA (parametro)? PC DEV PA LOG IDENT PC;
+
+procedimiento: PROCEDIMIENTO procedimientoAux variables instrucciones FPROCEDIMIENTO;
+procedimientoAux: IDENT PA ( parametro)? PC;
+
+//INSTRUCCIONES
+
+instrucciones: INSTRUCCIONES (tipoInstruccion)*; //si es asignacion, condicional, iteracion, ruptura de control,dev resultados, mostrar por consola y aserto
+tipoInstruccion: (asignacion | condicional | iteracion | ruptura | mostrar );
+
+asignacion: tipoAsignacion (COMA asignacion)?;
+
+tipoAsignacion: NUM | funciones | expreciones | sec_elementos;
+funciones: IDENT PA (vars | NUM | tipoLog) PC;
+expreciones: exprecionAux;
+
+exprecionAux: MENOS? (NUM | IDENT | PA exprecionAux PC)
+              |exprecionAux (MAS | MENOS |POR |DIVISION) exprecionAux;
+tipoLog: T | F;
+
+sec_elementos: CA CC | CA sec_elem CC;//Lista vacia y lista no vacia
+sec_elem: NUM (COMA sec_elem)?;
+
+condicional: ;
+
+
+
+

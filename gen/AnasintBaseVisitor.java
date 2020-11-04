@@ -1,4 +1,4 @@
-// Generated from C:/Users/admin/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/lolim/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -16,7 +16,7 @@ public class AnasintBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitSentencia(Anasint.SentenciaContext ctx) { return visitChildren(ctx); }
+	@Override public T visitPrograma(Anasint.ProgramaContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

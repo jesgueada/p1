@@ -1,4 +1,4 @@
-// Generated from C:/Users/admin/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/lolim/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -15,13 +15,13 @@ public class AnasintBaseListener implements AnasintListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSentencia(Anasint.SentenciaContext ctx) { }
+	@Override public void enterPrograma(Anasint.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSentencia(Anasint.SentenciaContext ctx) { }
+	@Override public void exitPrograma(Anasint.ProgramaContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

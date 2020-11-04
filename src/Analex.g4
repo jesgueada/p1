@@ -1,5 +1,7 @@
 // Analizador léxico lenguaje K
  lexer grammar Analex;
+PROGRAMA: 'PROGRAMA';
+VARIABLES: 'VARIABLES';
 
  BLANCO: ' ' ->skip;
  TABULADOR: '\t'->skip;
@@ -15,7 +17,7 @@ FALSO: 'F';
 NUM: 'NUM';
 LOG: 'LOG';
 SEQ: 'SEQ';
-//ASIG: ':';
+
  ENTERO: 'entero';
  BOOLEANO: 'booleano';
  Y: 'O';
@@ -27,12 +29,18 @@ SEQ: 'SEQ';
  PC : ')';
  CA: '[';
  CC: ']';
+
  PyC : ';';
  COMA : ',';
  ASIG: '=';
+
  MAYOR: '>';
  MENOR: '<';
+ MAYORIGUAL: '>=';
+ MENORIGUAL: '<=';
  IGUAL: '==';
+ DISTINTO: '!=';
+
  MAS: '+';
  MENOS: '-';
  POR: '*';

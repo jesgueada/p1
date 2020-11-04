@@ -1,4 +1,4 @@
-// Generated from C:/Users/admin/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/lolim/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -7,15 +7,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface AnasintListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link Anasint#sentencia}.
+	 * Enter a parse tree produced by {@link Anasint#programa}.
 	 * @param ctx the parse tree
 	 */
-	void enterSentencia(Anasint.SentenciaContext ctx);
+	void enterPrograma(Anasint.ProgramaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#sentencia}.
+	 * Exit a parse tree produced by {@link Anasint#programa}.
 	 * @param ctx the parse tree
 	 */
-	void exitSentencia(Anasint.SentenciaContext ctx);
+	void exitPrograma(Anasint.ProgramaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree

@@ -1,4 +1,4 @@
-// Generated from C:/Users/admin/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/lolim/IdeaProjects/p1/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -16,16 +16,17 @@ public class Anasint extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		BLANCO=1, TABULADOR=2, FIN_LINEA=3, CIERTO=4, FALSO=5, ENTERO=6, BOOLEANO=7, 
-		Y=8, O=9, NO=10, NUMERO=11, IDENT=12, PA=13, PC=14, PyC=15, COMA=16, ASIG=17, 
-		MAYOR=18, MENOR=19, IGUAL=20, MAS=21, MENOS=22, POR=23, DIV=24, COMENTARIO_BLOQUE=25, 
-		COMENTARIO_LINEA=26;
+		BLANCO=1, TABULADOR=2, FIN_LINEA=3, CIERTO=4, FALSO=5, NUM=6, LOG=7, SEQ=8, 
+		ENTERO=9, BOOLEANO=10, Y=11, O=12, NO=13, NUMERO=14, IDENT=15, PA=16, 
+		PC=17, CA=18, CC=19, PyC=20, COMA=21, ASIG=22, MAYOR=23, MENOR=24, MAYORIGUAL=25, 
+		MENORIGUAL=26, IGUAL=27, DISTINTO=28, MAS=29, MENOS=30, POR=31, DIV=32, 
+		COMENTARIO_BLOQUE=33, COMENTARIO_LINEA=34;
 	public static final int
-		RULE_sentencia = 0, RULE_variables = 1, RULE_tipo = 2, RULE_decl_vars = 3, 
+		RULE_programa = 0, RULE_variables = 1, RULE_tipo = 2, RULE_decl_vars = 3, 
 		RULE_expr = 4, RULE_expr1 = 5, RULE_expr2 = 6, RULE_expr3 = 7;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"sentencia", "variables", "tipo", "decl_vars", "expr", "expr1", "expr2", 
+			"programa", "variables", "tipo", "decl_vars", "expr", "expr1", "expr2", 
 			"expr3"
 		};
 	}
@@ -33,17 +34,19 @@ public class Anasint extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "' '", "'\t'", null, "'cierto'", "'falso'", "'entero'", "'booleano'", 
-			"'O'", "'Y'", "'NO'", null, null, "'('", "')'", "';'", "','", "'='", 
-			"'>'", "'<'", "'=='", "'+'", "'-'", "'*'", "'/'"
+			null, "' '", "'\t'", null, "'T'", "'F'", "'NUM'", "'LOG'", "'SEQ'", "'entero'", 
+			"'booleano'", "'O'", "'Y'", "'NO'", null, null, "'('", "')'", "'['", 
+			"']'", "';'", "','", "'='", "'>'", "'<'", "'>='", "'<='", "'=='", "'!='", 
+			"'+'", "'-'", "'*'", "'/'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "BLANCO", "TABULADOR", "FIN_LINEA", "CIERTO", "FALSO", "ENTERO", 
-			"BOOLEANO", "Y", "O", "NO", "NUMERO", "IDENT", "PA", "PC", "PyC", "COMA", 
-			"ASIG", "MAYOR", "MENOR", "IGUAL", "MAS", "MENOS", "POR", "DIV", "COMENTARIO_BLOQUE", 
+			null, "BLANCO", "TABULADOR", "FIN_LINEA", "CIERTO", "FALSO", "NUM", "LOG", 
+			"SEQ", "ENTERO", "BOOLEANO", "Y", "O", "NO", "NUMERO", "IDENT", "PA", 
+			"PC", "CA", "CC", "PyC", "COMA", "ASIG", "MAYOR", "MENOR", "MAYORIGUAL", 
+			"MENORIGUAL", "IGUAL", "DISTINTO", "MAS", "MENOS", "POR", "DIV", "COMENTARIO_BLOQUE", 
 			"COMENTARIO_LINEA"
 		};
 	}
@@ -98,7 +101,7 @@ public class Anasint extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	public static class SentenciaContext extends ParserRuleContext {
+	public static class ProgramaContext extends ParserRuleContext {
 		public VariablesContext variables() {
 			return getRuleContext(VariablesContext.class,0);
 		}
@@ -106,28 +109,28 @@ public class Anasint extends Parser {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode EOF() { return getToken(Anasint.EOF, 0); }
-		public SentenciaContext(ParserRuleContext parent, int invokingState) {
+		public ProgramaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_sentencia; }
+		@Override public int getRuleIndex() { return RULE_programa; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterSentencia(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterPrograma(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitSentencia(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitPrograma(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitSentencia(this);
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitPrograma(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final SentenciaContext sentencia() throws RecognitionException {
-		SentenciaContext _localctx = new SentenciaContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_sentencia);
+	public final ProgramaContext programa() throws RecognitionException {
+		ProgramaContext _localctx = new ProgramaContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_programa);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -911,28 +914,28 @@ public class Anasint extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\34W\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\3"+
-		"\3\3\3\3\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5#\n\5\3\6\3\6\3\6\3\6"+
-		"\3\6\5\6*\n\6\3\6\3\6\3\6\5\6/\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\78\n"+
-		"\7\3\7\5\7;\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bD\n\b\3\b\3\b\3\b\3\b\3"+
-		"\b\5\bK\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\tU\n\t\3\t\2\2\n\2\4\6\b"+
-		"\n\f\16\20\2\3\3\2\b\t\2]\2\22\3\2\2\2\4\26\3\2\2\2\6\31\3\2\2\2\b\"\3"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3$W\4\2\t\2\4\3\t\3"+
+		"\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\3\2\3\2\3\2\3\2\3\3\3"+
+		"\3\3\3\3\4\3\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5#\n\5\3\6\3\6\3\6\3\6\3"+
+		"\6\5\6*\n\6\3\6\3\6\3\6\5\6/\n\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\78\n\7"+
+		"\3\7\5\7;\n\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\bD\n\b\3\b\3\b\3\b\3\b\3\b"+
+		"\5\bK\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\tU\n\t\3\t\2\2\n\2\4\6\b\n"+
+		"\f\16\20\2\3\3\2\13\f\2]\2\22\3\2\2\2\4\26\3\2\2\2\6\31\3\2\2\2\b\"\3"+
 		"\2\2\2\n.\3\2\2\2\f:\3\2\2\2\16J\3\2\2\2\20T\3\2\2\2\22\23\5\4\3\2\23"+
-		"\24\5\n\6\2\24\25\7\2\2\3\25\3\3\2\2\2\26\27\5\b\5\2\27\30\7\21\2\2\30"+
-		"\5\3\2\2\2\31\32\t\2\2\2\32\7\3\2\2\2\33\34\7\16\2\2\34\35\5\6\4\2\35"+
-		"\36\7\22\2\2\36\37\5\b\5\2\37#\3\2\2\2 !\7\16\2\2!#\5\6\4\2\"\33\3\2\2"+
-		"\2\" \3\2\2\2#\t\3\2\2\2$)\5\f\7\2%&\7\n\2\2&*\5\n\6\2\'(\7\13\2\2(*\5"+
-		"\n\6\2)%\3\2\2\2)\'\3\2\2\2*/\3\2\2\2+,\7\f\2\2,/\5\n\6\2-/\5\f\7\2.$"+
-		"\3\2\2\2.+\3\2\2\2.-\3\2\2\2/\13\3\2\2\2\60\67\5\16\b\2\61\62\7\24\2\2"+
-		"\628\5\16\b\2\63\64\7\25\2\2\648\5\16\b\2\65\66\7\26\2\2\668\5\16\b\2"+
-		"\67\61\3\2\2\2\67\63\3\2\2\2\67\65\3\2\2\28;\3\2\2\29;\5\16\b\2:\60\3"+
-		"\2\2\2:9\3\2\2\2;\r\3\2\2\2<C\5\20\t\2=>\7\27\2\2>D\5\16\b\2?@\7\30\2"+
-		"\2@D\5\16\b\2AB\7\31\2\2BD\5\16\b\2C=\3\2\2\2C?\3\2\2\2CA\3\2\2\2DK\3"+
-		"\2\2\2EF\5\20\t\2FG\7\32\2\2GH\5\16\b\2HK\3\2\2\2IK\5\20\t\2J<\3\2\2\2"+
-		"JE\3\2\2\2JI\3\2\2\2K\17\3\2\2\2LU\7\16\2\2MU\7\r\2\2NU\7\6\2\2OU\7\7"+
-		"\2\2PQ\7\17\2\2QR\5\n\6\2RS\7\20\2\2SU\3\2\2\2TL\3\2\2\2TM\3\2\2\2TN\3"+
-		"\2\2\2TO\3\2\2\2TP\3\2\2\2U\21\3\2\2\2\n\").\67:CJT";
+		"\24\5\n\6\2\24\25\7\2\2\3\25\3\3\2\2\2\26\27\5\b\5\2\27\30\7\26\2\2\30"+
+		"\5\3\2\2\2\31\32\t\2\2\2\32\7\3\2\2\2\33\34\7\21\2\2\34\35\5\6\4\2\35"+
+		"\36\7\27\2\2\36\37\5\b\5\2\37#\3\2\2\2 !\7\21\2\2!#\5\6\4\2\"\33\3\2\2"+
+		"\2\" \3\2\2\2#\t\3\2\2\2$)\5\f\7\2%&\7\r\2\2&*\5\n\6\2\'(\7\16\2\2(*\5"+
+		"\n\6\2)%\3\2\2\2)\'\3\2\2\2*/\3\2\2\2+,\7\17\2\2,/\5\n\6\2-/\5\f\7\2."+
+		"$\3\2\2\2.+\3\2\2\2.-\3\2\2\2/\13\3\2\2\2\60\67\5\16\b\2\61\62\7\31\2"+
+		"\2\628\5\16\b\2\63\64\7\32\2\2\648\5\16\b\2\65\66\7\35\2\2\668\5\16\b"+
+		"\2\67\61\3\2\2\2\67\63\3\2\2\2\67\65\3\2\2\28;\3\2\2\29;\5\16\b\2:\60"+
+		"\3\2\2\2:9\3\2\2\2;\r\3\2\2\2<C\5\20\t\2=>\7\37\2\2>D\5\16\b\2?@\7 \2"+
+		"\2@D\5\16\b\2AB\7!\2\2BD\5\16\b\2C=\3\2\2\2C?\3\2\2\2CA\3\2\2\2DK\3\2"+
+		"\2\2EF\5\20\t\2FG\7\"\2\2GH\5\16\b\2HK\3\2\2\2IK\5\20\t\2J<\3\2\2\2JE"+
+		"\3\2\2\2JI\3\2\2\2K\17\3\2\2\2LU\7\21\2\2MU\7\20\2\2NU\7\6\2\2OU\7\7\2"+
+		"\2PQ\7\22\2\2QR\5\n\6\2RS\7\23\2\2SU\3\2\2\2TL\3\2\2\2TM\3\2\2\2TN\3\2"+
+		"\2\2TO\3\2\2\2TP\3\2\2\2U\21\3\2\2\2\n\").\67:CJT";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
