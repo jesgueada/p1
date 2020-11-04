@@ -1,4 +1,4 @@
-
+//asas
 programa 	: variables subprogramas instrucciones 
 	;
 
