@@ -10,19 +10,28 @@
  fragment DIGITO: [0-9];
  fragment LETRA:[a-zA-Z];
 
-CIERTO: 'T';
-FALSO: 'F';
+
 NUM: 'NUM';
 LOG: 'LOG';
 SEQ: 'SEQ';
-//ASIG: ':';
- ENTERO: 'entero';
- BOOLEANO: 'booleano';
- Y: 'O';
- O: 'Y';
- NO: 'NO';
+
+ PROGRAMA: 'PROGRAMA';
+ VARIABLES: 'VARIABLES';
+ SUBPROGRAMAS: 'SUBPROGRAMAS';
+ FUNCION: 'FUNCION';
+ FFUNCION: 'FFUNCION';
+ PROCEDIMIENTO: 'PROCEDIMIENTO';
+ FPROCEDIMIENTO: 'FPROCEDIMIENTO';
+ INSTRUCCIONES: 'INSTRUCCIONES';
+ MOSTRAR: 'mostrar';
+ RUPTURA: 'ruptura';
+ DEV: 'dev';
+CIERTO: 'T';
+FALSO: 'F';
+
  NUMERO : ('-')?DIGITO+;
  IDENT : LETRA(LETRA|DIGITO)*;
+
  PA : '(';
  PC : ')';
  CA: '[';
@@ -30,13 +39,32 @@ SEQ: 'SEQ';
  PyC : ';';
  COMA : ',';
  ASIG: '=';
+
  MAYOR: '>';
  MENOR: '<';
  IGUAL: '==';
+ DISTINTO: '!=';
+ MENORIGUAL: '<=';
+ MAYORIGUAL: '>=';
+
+ CONJUNCION: '&&';
+ DISYUNCION: '||';
+ NEGACION: '!';
+
  MAS: '+';
  MENOS: '-';
  POR: '*';
  DIV: '/';
+
+ SI: 'si';
+ SINO: 'sino';
+ ENTONCES: 'entonces';
+ FSI: 'fsi';
+
+ MIENTRAS: 'mientras';
+ FMIENTRAS: 'fmientras';
+
+
  COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
  COMENTARIO_LINEA : '//' .*? FIN_LINEA -> skip ;
 
