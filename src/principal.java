@@ -14,18 +14,17 @@ public class principal {
         Analex analex = new Analex(input);
         CommonTokenStream tokens = new CommonTokenStream(analex);
         Anasint anasint = new Anasint(tokens);
-        ParseTree tree = anasint.sentencia();
+        ParseTree tree = anasint.asignacion();
 
         JFrame frame = new JFrame("Árbol de Análisis");
         JPanel panel = new JPanel();
-        TreeViewer viewr = new TreeViewer(Arrays.asList(anasint.getRuleNames()),tree);
+        TreeViewer viewr = new TreeViewer(Arrays.asList( anasint.getRuleNames()),tree);
+
         viewr.setScale(1);//scale a little
         panel.add(viewr);
         frame.add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,400);
         frame.setVisible(true);
-
-
     }
 }
