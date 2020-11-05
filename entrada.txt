@@ -1,2 +1,2 @@
-x booleano, y entero;
-NO x + y - 3
+i,max,min:NUM;
+i + max - 3

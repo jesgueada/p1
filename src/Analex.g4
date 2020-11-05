@@ -23,6 +23,7 @@ SEQ: 'SEQ';
  PROCEDIMIENTO: 'PROCEDIMIENTO';
  FPROCEDIMIENTO: 'FPROCEDIMIENTO';
  INSTRUCCIONES: 'INSTRUCCIONES';
+ ASIGNACIONES: 'ASIGNACIONES';
  MOSTRAR: 'mostrar';
  RUPTURA: 'ruptura';
  DEV: 'dev';
@@ -39,6 +40,7 @@ FALSO: 'F';
  PyC : ';';
  COMA : ',';
  ASIG: '=';
+ DP: ':';
 
  MAYOR: '>';
  MENOR: '<';

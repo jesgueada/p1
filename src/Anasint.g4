@@ -51,7 +51,7 @@ expr2: NUM CA expr_arit CC | PA expr_arit PC | MENOS expr_arit | funciones | sec
 
 funciones: IDENT PA (vars | NUM | tipoLog) PC;
 
-tipoLog: T | F;
+tipoLog: CIERTO | FALSO;
 
 sec_elementos: CA CC | CA sec_elem CC;//Lista vacia y lista no vacia
 sec_elem: NUM (COMA sec_elem)?;
