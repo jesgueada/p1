@@ -8,6 +8,7 @@
 // BTF: (' '|'\t'|'\r'?'\n');
 
  fragment DIGITO: [0-9];
+
  fragment LETRA:[a-zA-Z];
 
 
@@ -23,15 +24,15 @@ SEQ: 'SEQ';
  PROCEDIMIENTO: 'PROCEDIMIENTO';
  FPROCEDIMIENTO: 'FPROCEDIMIENTO';
  INSTRUCCIONES: 'INSTRUCCIONES';
- ASIGNACIONES: 'ASIGNACIONES';
+ // ASIGNACIONES: 'ASIGNACIONES';
  MOSTRAR: 'mostrar';
  RUPTURA: 'ruptura';
  DEV: 'dev';
-CIERTO: 'T';
-FALSO: 'F';
+ CIERTO: 'T';
+ FALSO: 'F';
 
  NUMERO : ('-')?DIGITO+;
- IDENT : LETRA(LETRA|DIGITO)*;
+
 
  PA : '(';
  PC : ')';
@@ -66,8 +67,9 @@ FALSO: 'F';
  MIENTRAS: 'mientras';
  FMIENTRAS: 'fmientras';
  HACER: 'hacer';
+ BARRABAJA: '_';
 
+ IDENT : LETRA(LETRA|DIGITO|BARRABAJA)*;
 
  COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
  COMENTARIO_LINEA : '//' .*? FIN_LINEA -> skip ;
-

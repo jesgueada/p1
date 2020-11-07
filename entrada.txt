@@ -4,22 +4,24 @@ i,max,min:NUM;
 s:SEQ;
 SUBPROGRAMAS
 INSTRUCCIONES
-ASIGNACIONES
-{ cierto }
-s=[T,F,T,F];
+
+s=[1,2,3,4,5];
 i=0;
+
 mostrar(i);
+
 min=s[i];
 max=s[i];
+
+
+
 mientras (i<=ultima_posicion(s)) hacer
-si (s[i]>max) entonces
-max=s[i];
-fsi
-si (s[i]<min) entonces
-min=s[i];
-fsi
-mostrar(min,max);
-{ PARATODO(p:[0,i],s[p]<=max && s[p]>=min) }
-i=i+1;
+    si (s[i]>max) entonces
+        max=s[i];
+    fsi
+    si (s[i]<min) entonces
+        min=s[i];
+    fsi
+    mostrar(min,max);
+    i=i+1;
 fmientras
-{ PARATODO(p:[0,ultima_posicion(s)],s[p]<=max && s[p]>=min) }

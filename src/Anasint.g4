@@ -7,27 +7,28 @@ options{
     tokenVocab=Analex;
 }
 
-programa : PROGRAMA secciones EOF;    // Va bien tener EOF para comprobar errores hasta el final del programa
+
+//programa : PROGRAMA expr EOF;
+//expr: variables  (subprogramas)? instrucciones;
+
+programa : PROGRAMA secciones;    // Va bien tener EOF para comprobar errores hasta el final del programa
 
 secciones : variables subprogramas instrucciones;     // expr -> secciones
 
-//VARIABLES
-
 variables : VARIABLES (decl_vars)* ;
 
-//decl_vars : tipo vars PyC  | vars DP tipo PyC;//ej --> s:SEQ(NUM)     mod: contemplaba NUM x
+decl_vars : tipo vars PyC
+          | vars DP tipo PyC;//ej --> s:SEQ(NUM)
 
-decl_vars : vars DP tipo PyC;
-
-vars: IDENT (COMA vars)?;
+vars: IDENT (COMA vars)?;// ej: int a,b,c;
 
 tipo: NUM
     | LOG
-    |SEQ PA (NUM | LOG) PC;  // mod: contemplaba SEQ (SEQ)
+    |SEQ PA tipo PC;
+
 
 
 //SUBPROGRAMAS
-
 subprogramas : SUBPROGRAMAS (funciones | procedimientos)*;
 
 funciones : FUNCION funcionAux variables instrucciones FFUNCION ;   //INSTRUCCIONES debe contemplar dev a parte de las mismas instrucciones
@@ -53,35 +54,43 @@ procedimientoAux : IDENT PA (parametros_e)? PC ;
 //INSTRUCCIONES
 
 instrucciones: INSTRUCCIONES (tipoInstruccion)*; //si es asignacion, condicional, iteracion, ruptura de control,dev resultados, mostrar por consola y aserto
-
 tipoInstruccion: (asignaciones | condiciones | iteracion | ruptura | mostrar );
 
+asignaciones: asignacion;
 
-asignaciones : asignacion;  //NO HAce falta el lexema ASIGNACIONES
-asignacion : IDENT ASIG expr PyC ;
-
+asignacion: IDENT ASIG expr PyC;
 expr : (expr_num | expr_log | expr_seq | expr_funcion) ;
 
 expr_num : expr_num (POR | MAS | MENOS ) expr_num
 		| expr_num COMA expr_num
 		| IDENT
 		| NUMERO
+		| IDENT CA IDENT CC
 	;                        // Se debe declarar ultima_posicion? ya que devuelve una pos (NUM)
 
-expr_log : IDENT | CIERTO | FALSO ;
+expr_log : IDENT | CIERTO | FALSO | IDENT CA IDENT CC;
 
 expr_seq : CA (seq_elems)? CC
 	| IDENT
 	;
 
 seq_elems : NUMERO (COMA NUMERO)*					//No dice nada de asig multiple para seq
-		| (CIERTO | FALSO) (COMA ( CIERTO | FALSO) )*
+		| (CIERTO | FALSO) (COMA ( CIERTO | FALSO))*
+		| IDENT
 	;
 
-expr_funcion : IDENT PA (NUMERO | CIERTO | FALSO | IDENT) PC PyC;      //llamada a una funcion
 
+expr_funcion : IDENT PA (NUMERO | CIERTO | FALSO | IDENT) PC;
 
+//lista: CA (seq_elems)? CC;
 
+//funciones: IDENT PA (vars | NUM | tipoLog) PC;
+
+//tipoLog: CIERTO | FALSO;
+
+//seq_elems: (expr2) (COMA seq_elems)?;
+//sec_elementos: CA CC | CA sec_elem CC;//Lista vacia y lista no vacia
+//sec_elem: NUM (COMA sec_elem)?;
 
 condiciones: SI PA expr_cond PC ENTONCES bloque (SINO bloque)? FSI ;
 
@@ -101,9 +110,10 @@ comparador_der	: NUMERO
 		| CIERTO
 		| FALSO
 		| IDENT
+		| expr_funcion
 	;
 
-indice	: NUM
+indice	: NUMERO
 	| IDENT
 	| indice (POR | MAS | MENOS) indice
 	;
@@ -114,12 +124,11 @@ operadores_log	: ( IGUAL | DISTINTO | MENOR | MAYOR | MENORIGUAL | MAYORIGUAL )
 
 
 
-iteracion : MIENTRAS PA expr_cond PC HACER (tipoInstruccion) FMIENTRAS;
+iteracion : MIENTRAS PA expr_cond PC HACER (tipoInstruccion)* FMIENTRAS;
 
 ruptura : RUPTURA PyC;
 
-mostrar : MOSTRAR PA IDENT PC PyC ;
-
+mostrar : MOSTRAR PA IDENT (COMA IDENT)? PC PyC ;
 
 
 
