@@ -17,15 +17,15 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitPrograma(Anasint.ProgramaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#expr}.
+	 * Enter a parse tree produced by {@link Anasint#secciones}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr(Anasint.ExprContext ctx);
+	void enterSecciones(Anasint.SeccionesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#expr}.
+	 * Exit a parse tree produced by {@link Anasint#secciones}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr(Anasint.ExprContext ctx);
+	void exitSecciones(Anasint.SeccionesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree
@@ -36,6 +36,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariables(Anasint.VariablesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#decl_vars}.
+	 * @param ctx the parse tree
+	 */
+	void enterDecl_vars(Anasint.Decl_varsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#decl_vars}.
+	 * @param ctx the parse tree
+	 */
+	void exitDecl_vars(Anasint.Decl_varsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#vars}.
 	 * @param ctx the parse tree
@@ -57,16 +67,6 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitTipo(Anasint.TipoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#decl_vars}.
-	 * @param ctx the parse tree
-	 */
-	void enterDecl_vars(Anasint.Decl_varsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#decl_vars}.
-	 * @param ctx the parse tree
-	 */
-	void exitDecl_vars(Anasint.Decl_varsContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link Anasint#subprogramas}.
 	 * @param ctx the parse tree
 	 */
@@ -77,25 +77,15 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitSubprogramas(Anasint.SubprogramasContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#funcionOpredicado}.
+	 * Enter a parse tree produced by {@link Anasint#funciones}.
 	 * @param ctx the parse tree
 	 */
-	void enterFuncionOpredicado(Anasint.FuncionOpredicadoContext ctx);
+	void enterFunciones(Anasint.FuncionesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#funcionOpredicado}.
+	 * Exit a parse tree produced by {@link Anasint#funciones}.
 	 * @param ctx the parse tree
 	 */
-	void exitFuncionOpredicado(Anasint.FuncionOpredicadoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void enterFuncion(Anasint.FuncionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#funcion}.
-	 * @param ctx the parse tree
-	 */
-	void exitFuncion(Anasint.FuncionContext ctx);
+	void exitFunciones(Anasint.FuncionesContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#funcionAux}.
 	 * @param ctx the parse tree
@@ -107,15 +97,15 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitFuncionAux(Anasint.FuncionAuxContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#parametro}.
+	 * Enter a parse tree produced by {@link Anasint#funcion}.
 	 * @param ctx the parse tree
 	 */
-	void enterParametro(Anasint.ParametroContext ctx);
+	void enterFuncion(Anasint.FuncionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#parametro}.
+	 * Exit a parse tree produced by {@link Anasint#funcion}.
 	 * @param ctx the parse tree
 	 */
-	void exitParametro(Anasint.ParametroContext ctx);
+	void exitFuncion(Anasint.FuncionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#predicado}.
 	 * @param ctx the parse tree
@@ -127,25 +117,45 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitPredicado(Anasint.PredicadoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#predicadoAux}.
+	 * Enter a parse tree produced by {@link Anasint#parametros_e}.
 	 * @param ctx the parse tree
 	 */
-	void enterPredicadoAux(Anasint.PredicadoAuxContext ctx);
+	void enterParametros_e(Anasint.Parametros_eContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#predicadoAux}.
+	 * Exit a parse tree produced by {@link Anasint#parametros_e}.
 	 * @param ctx the parse tree
 	 */
-	void exitPredicadoAux(Anasint.PredicadoAuxContext ctx);
+	void exitParametros_e(Anasint.Parametros_eContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#procedimiento}.
+	 * Enter a parse tree produced by {@link Anasint#parametro_e}.
 	 * @param ctx the parse tree
 	 */
-	void enterProcedimiento(Anasint.ProcedimientoContext ctx);
+	void enterParametro_e(Anasint.Parametro_eContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#procedimiento}.
+	 * Exit a parse tree produced by {@link Anasint#parametro_e}.
 	 * @param ctx the parse tree
 	 */
-	void exitProcedimiento(Anasint.ProcedimientoContext ctx);
+	void exitParametro_e(Anasint.Parametro_eContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#parametros_s_f}.
+	 * @param ctx the parse tree
+	 */
+	void enterParametros_s_f(Anasint.Parametros_s_fContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#parametros_s_f}.
+	 * @param ctx the parse tree
+	 */
+	void exitParametros_s_f(Anasint.Parametros_s_fContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#procedimientos}.
+	 * @param ctx the parse tree
+	 */
+	void enterProcedimientos(Anasint.ProcedimientosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#procedimientos}.
+	 * @param ctx the parse tree
+	 */
+	void exitProcedimientos(Anasint.ProcedimientosContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#procedimientoAux}.
 	 * @param ctx the parse tree
@@ -197,75 +207,65 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitAsignacion(Anasint.AsignacionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#expr_arit}.
+	 * Enter a parse tree produced by {@link Anasint#expr}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr_arit(Anasint.Expr_aritContext ctx);
+	void enterExpr(Anasint.ExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#expr_arit}.
+	 * Exit a parse tree produced by {@link Anasint#expr}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr_arit(Anasint.Expr_aritContext ctx);
+	void exitExpr(Anasint.ExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#expr1}.
+	 * Enter a parse tree produced by {@link Anasint#expr_num}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr1(Anasint.Expr1Context ctx);
+	void enterExpr_num(Anasint.Expr_numContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#expr1}.
+	 * Exit a parse tree produced by {@link Anasint#expr_num}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr1(Anasint.Expr1Context ctx);
+	void exitExpr_num(Anasint.Expr_numContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#expr2}.
+	 * Enter a parse tree produced by {@link Anasint#expr_log}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr2(Anasint.Expr2Context ctx);
+	void enterExpr_log(Anasint.Expr_logContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#expr2}.
+	 * Exit a parse tree produced by {@link Anasint#expr_log}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr2(Anasint.Expr2Context ctx);
+	void exitExpr_log(Anasint.Expr_logContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#funciones}.
+	 * Enter a parse tree produced by {@link Anasint#expr_seq}.
 	 * @param ctx the parse tree
 	 */
-	void enterFunciones(Anasint.FuncionesContext ctx);
+	void enterExpr_seq(Anasint.Expr_seqContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#funciones}.
+	 * Exit a parse tree produced by {@link Anasint#expr_seq}.
 	 * @param ctx the parse tree
 	 */
-	void exitFunciones(Anasint.FuncionesContext ctx);
+	void exitExpr_seq(Anasint.Expr_seqContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#tipoLog}.
+	 * Enter a parse tree produced by {@link Anasint#seq_elems}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipoLog(Anasint.TipoLogContext ctx);
+	void enterSeq_elems(Anasint.Seq_elemsContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#tipoLog}.
+	 * Exit a parse tree produced by {@link Anasint#seq_elems}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipoLog(Anasint.TipoLogContext ctx);
+	void exitSeq_elems(Anasint.Seq_elemsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#sec_elementos}.
+	 * Enter a parse tree produced by {@link Anasint#expr_funcion}.
 	 * @param ctx the parse tree
 	 */
-	void enterSec_elementos(Anasint.Sec_elementosContext ctx);
+	void enterExpr_funcion(Anasint.Expr_funcionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#sec_elementos}.
+	 * Exit a parse tree produced by {@link Anasint#expr_funcion}.
 	 * @param ctx the parse tree
 	 */
-	void exitSec_elementos(Anasint.Sec_elementosContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#sec_elem}.
-	 * @param ctx the parse tree
-	 */
-	void enterSec_elem(Anasint.Sec_elemContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#sec_elem}.
-	 * @param ctx the parse tree
-	 */
-	void exitSec_elem(Anasint.Sec_elemContext ctx);
+	void exitExpr_funcion(Anasint.Expr_funcionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#condiciones}.
 	 * @param ctx the parse tree
@@ -277,6 +277,26 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitCondiciones(Anasint.CondicionesContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void enterBloque(Anasint.BloqueContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#bloque}.
+	 * @param ctx the parse tree
+	 */
+	void exitBloque(Anasint.BloqueContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#devolver}.
+	 * @param ctx the parse tree
+	 */
+	void enterDevolver(Anasint.DevolverContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#devolver}.
+	 * @param ctx the parse tree
+	 */
+	void exitDevolver(Anasint.DevolverContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#expr_cond}.
 	 * @param ctx the parse tree
 	 */
@@ -287,55 +307,45 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitExpr_cond(Anasint.Expr_condContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#condicion}.
+	 * Enter a parse tree produced by {@link Anasint#comparador_izq}.
 	 * @param ctx the parse tree
 	 */
-	void enterCondicion(Anasint.CondicionContext ctx);
+	void enterComparador_izq(Anasint.Comparador_izqContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#condicion}.
+	 * Exit a parse tree produced by {@link Anasint#comparador_izq}.
 	 * @param ctx the parse tree
 	 */
-	void exitCondicion(Anasint.CondicionContext ctx);
+	void exitComparador_izq(Anasint.Comparador_izqContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#tipo_cond}.
+	 * Enter a parse tree produced by {@link Anasint#comparador_der}.
 	 * @param ctx the parse tree
 	 */
-	void enterTipo_cond(Anasint.Tipo_condContext ctx);
+	void enterComparador_der(Anasint.Comparador_derContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#tipo_cond}.
+	 * Exit a parse tree produced by {@link Anasint#comparador_der}.
 	 * @param ctx the parse tree
 	 */
-	void exitTipo_cond(Anasint.Tipo_condContext ctx);
+	void exitComparador_der(Anasint.Comparador_derContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#sino}.
+	 * Enter a parse tree produced by {@link Anasint#indice}.
 	 * @param ctx the parse tree
 	 */
-	void enterSino(Anasint.SinoContext ctx);
+	void enterIndice(Anasint.IndiceContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#sino}.
+	 * Exit a parse tree produced by {@link Anasint#indice}.
 	 * @param ctx the parse tree
 	 */
-	void exitSino(Anasint.SinoContext ctx);
+	void exitIndice(Anasint.IndiceContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#operadorLog}.
+	 * Enter a parse tree produced by {@link Anasint#operadores_log}.
 	 * @param ctx the parse tree
 	 */
-	void enterOperadorLog(Anasint.OperadorLogContext ctx);
+	void enterOperadores_log(Anasint.Operadores_logContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#operadorLog}.
+	 * Exit a parse tree produced by {@link Anasint#operadores_log}.
 	 * @param ctx the parse tree
 	 */
-	void exitOperadorLog(Anasint.OperadorLogContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#dev}.
-	 * @param ctx the parse tree
-	 */
-	void enterDev(Anasint.DevContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#dev}.
-	 * @param ctx the parse tree
-	 */
-	void exitDev(Anasint.DevContext ctx);
+	void exitOperadores_log(Anasint.Operadores_logContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#iteracion}.
 	 * @param ctx the parse tree

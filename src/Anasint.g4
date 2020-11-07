@@ -57,7 +57,7 @@ instrucciones: INSTRUCCIONES (tipoInstruccion)*; //si es asignacion, condicional
 tipoInstruccion: (asignaciones | condiciones | iteracion | ruptura | mostrar );
 
 
-asignaciones : (asignacion)*;  //NO HAce falta el lexema ASIGNACIONES
+asignaciones : asignacion;  //NO HAce falta el lexema ASIGNACIONES
 asignacion : IDENT ASIG expr PyC ;
 
 expr : (expr_num | expr_log | expr_seq | expr_funcion) ;
