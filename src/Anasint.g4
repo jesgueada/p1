@@ -24,7 +24,7 @@ vars: IDENT (COMA vars)?;// ej: int a,b,c;
 
 tipo: NUM
     | LOG
-    |SEQ PA tipo PC;
+    |SEQ (PA tipo PC)?;
 
 
 
