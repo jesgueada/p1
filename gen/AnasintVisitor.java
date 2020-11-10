@@ -46,6 +46,30 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTipo(Anasint.TipoContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Anasint#tipo_elemental}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo_elemental(Anasint.Tipo_elementalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#tipo_num}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo_num(Anasint.Tipo_numContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#tipo_log}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo_log(Anasint.Tipo_logContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#tipo_no_elemental}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTipo_no_elemental(Anasint.Tipo_no_elementalContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Anasint#subprogramas}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -154,6 +178,12 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr_seq(Anasint.Expr_seqContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Anasint#indice}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIndice(Anasint.IndiceContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Anasint#seq_elems}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -178,12 +208,6 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBloque(Anasint.BloqueContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#devolver}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDevolver(Anasint.DevolverContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link Anasint#expr_cond}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -201,12 +225,6 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitComparador_der(Anasint.Comparador_derContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Anasint#indice}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIndice(Anasint.IndiceContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#operadores_log}.
 	 * @param ctx the parse tree
@@ -231,4 +249,10 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMostrar(Anasint.MostrarContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#devolver}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDevolver(Anasint.DevolverContext ctx);
 }
