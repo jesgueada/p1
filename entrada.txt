@@ -1,7 +1,9 @@
 PROGRAMA
 VARIABLES
 i,max,min:NUM;
-s:SEQ;
+//s:SEQ;
+s:SEQ(NUM);
+
 SUBPROGRAMAS
 INSTRUCCIONES
 
@@ -13,6 +15,7 @@ mostrar(i);
 min=s[i];
 max=s[i];
 
+test = func_test(probando(x));
 
 
 mientras (i<=ultima_posicion(s)) hacer
