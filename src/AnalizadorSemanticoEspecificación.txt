@@ -1,0 +1,124 @@
+
+Analizador semántico del lenguaje P
+
+OOBJETIVOS: Se comprueban las siguientes situaciones en un programa en lenguaje P
+            (1) Variable asignada no declarada en VARIABLES
+            (2) Variable duplicada en VARIABLES
+            (3) Calcular el tipo de una expresion  //Por acabar aún.
+    //TODO  (4) índice correcto respecto el tamaño de una secuencia
+    //TODO  (5) Comprobar que tenga coherencia los parametros de las llamadas a funciones/prodecimientos
+
+=====================================================================================================================================================
+
+                                                                  OBJETIVO Nº1
+													"Variable asignada no declarada en VARIABLES"
+=====================================================================================================================================================
+
+DECISIONES DE DISEÑO 1.1 : Para cumplir el objetivo (1) es necesario almacenar las variables,
+							y sus respectivos tipos en : almacen_variables_declaradas.
+
+
+    almacen_variables_declaradas    (variable global)
+
+    programa : PROGRAMA secciones EOF
+
+    (parametro de salida n)
+    secciones : n=variables {almacenar n en almacen_variables_declaradas} subprogramas instrucciones
+
+    (parametro de salida m)
+    variables : VARIABLES (m=decl_vars {almacenar m en n})*
+
+    (parametro v)
+    decl_vars : v=vars DP t=tipo PyC {almacenar en m cada variable en v con tipo t}
+
+    vars: IDENT {incluir IDENT en r} (COMA s=vars {incluir s en r})?
+
+    (parametro de salida t)
+    tipo: NUM {t = entero}
+        | LOG {t = booleano}
+        | seq_entera {t = seq_entera}
+        | seq_logica {t = seq_entera}
+
+    seq_entera : SEQ PA NUM PC
+    seq_logica : SEQ PA LOG PC
+
+
+DECISIONES DE DISEÑO 1.2 : Para cumplir el objetivo(1) es necesario comprobar por asignacion la existencia
+							de su identificador  en :  almacen_variables_declaradas .
+
+    //INSTRUCCIONES:ASIGNACIONES
+    asignaciones: asignacion  {si v_asin NO está contenida en variables de almacen_variables_declaradas entonces ERROR};
+
+    (parametro de salida v_asig)
+    asignacion: v_asig=IDENT ASIG expr PyC;
+
+DECISIONES DE DISEÑO 1.3 : Para cumplir el objetivo (2) es encesario comprobar por asignacion,
+                            aquellas variables, que le pasas en la expresion, si estan declaradas.
+
+
+DECISION DE DISEÑO 1.4 : Para cumplir el objetivo (2) es encesario comprobar por asignacion,
+                         aquella secuencia, que le pasas en la expresion, si esta declarada.
+
+
+DECISIONES DE DISEÑO 1.6 : Para cumplir el objetivo (a) es necesario identificar si la variable declarada esta en subprograma,       --->PREGUNTAR
+                            ya que el contenedor de variables declaradas es global y el de subprogramas no.
+
+
+
+=================================================================================================================================================
+
+                                                          OBJETIVO Nº2
+												"Identificador,de la variable, duplicado en VARIABLES"
+=================================================================================================================================================
+
+DECISION DE DISEÑO 2 : Para cumplir el objetivo (2) es necesario comprobar por varibale declarada su existencia en almacen_variables_declaradas.
+                        OBJETIVO 2 => OBJETIVO 1
+
+    //DECLARACIÓN DE VARIABLES
+
+    variables : VARIABLES (decl_vars)* ;
+
+    decl_vars : vars {si r está contenida en variables de almacen_variables_declaradas entonces ERROR} DP tipo PyC;
+
+    (parametro de salida r)
+    vars: IDENT {incluir IDENT en r} (COMA vars {incluir s en r})?;
+
+
+===================================================================================================================================================
+
+														OBJETIVO Nº3
+												"Calcular el tipo de una expresion"
+===================================================================================================================================================
+
+
+DECISION DE DISEÑO 3.1 : Para cumplir el objetivo (3), si y sólo si, el tipo de la variable a la que se asigna
+                        debe de coincidir con el tipo de la expresión asignada.
+                        De acuerdo con la definición de P, consideramos 6 tipos:
+                            entero,booleano,lista,lista booleana,lista entera y no tipo(indefinido).
+
+DECISION DE DISEÑo 3.2 : Para cumplir el objetivo (3) es necesario comprobar el tipo de cada expresion.
+
+DECISION DE DISEÑO 3.3 : Para cumplir el objetivo (3) es encesario comprobar que si una variable , NUM o LOG, tiene
+                         asignada un secuencia, devuelva apropiadamente el tipo del elemento (no SEQ(NUM | LOG).
+
+DECISION DE DISEÑO 3.4 : Comprobar que coincidan los tipos de los elementos de una secuencia.
+						 En el análisis lexico solo contempla que una secuencia esté formada por NUMEROS y CIERTO o FALSO.
+
+DECISION DE DISEÑO 3.5 :Para poder calcular el tipo que devuelve una llamada a funcion, previamente se tiene
+                        que almacenar en memoria el par nombre_funcion, tipos_a_devolver  en: almacen_subprogramas.
+
+						Hay que tener en cuenta, que las funciones tienen un conjunto no vacio de parametros de salida.
+						La funcion predicado devuelve LOG y los procedimientos no devuelven nada (void).
+
+DECISION DE DISEÑO 3.6 : Comprobar que las llamadas a funcion o procedmiento, deben de estar declaradas en el subprograma.
+
+DECISION DE DISEÑO 3.7 : Diferenciar el número de elementos que devuelve una llamada a función, ya que una asignación
+						puede ser multiple.
+
+
+						----> PREGUNTAR : ¿COMO ACCEDER A UN VISITOR CON UN CONTEXTO DIFERENTE, SIENDO DICHO CONTEXTO HIJO.
+						//Mi clase visitor devuelve un String, pero la llamadafuncion puede devolver más de un tipo
+						//por ello devuelve una lista de string  -> problema con la clase visitor
+						//Por tanto falta implementar evaluar expresiones multiples que se sean asignadas a una func o pred.
+
+                      //TODO
