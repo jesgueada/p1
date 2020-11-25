@@ -9,7 +9,7 @@ decl_vars : vars DP tipo PyC
 
 vars: IDENT COMA vars
         | IDENT
-    ;
+
 
 //en tipo podriamos tener NUM LOG Y SEQ, pero hemos diferenciado la secuencia logica
 //y la secuencia numerica
