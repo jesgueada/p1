@@ -1,0 +1,145 @@
+programa : PROGRAMA secciones EOF;
+
+secciones : variables subprogramas instrucciones
+
+
+variables : VARIABLES (decl_vars)*
+
+decl_vars : vars DP tipo PyC
+
+vars: IDENT COMA vars
+        | IDENT
+    ;
+
+//en tipo podriamos tener NUM LOG Y SEQ, pero hemos diferenciado la secuencia logica
+//y la secuencia numerica
+
+tipo: NUM
+    | LOG
+    | seq_entera
+    | seq_logica
+
+seq_entera : SEQ PA NUM PC
+seq_logica : SEQ PA LOG PC
+
+
+subprogramas : SUBPROGRAMAS (funciones | procedimientos)*
+
+
+funciones : FUNCION funcionAux variables instrucciones FFUNCION
+
+funcionAux : funcion
+           | predicado
+
+//declaramos que la funcion y predicado pueden tener parametros vacios pero no puede devolver nada vacio
+//para ello creamos dos tipos de parametros los que pueden ser un conjunto de variables o un conjunto de numeros o tipo logico
+
+funcion : IDENT PA (parametros_e)? PC DEV PA parametros_s_f PC
+predicado : IDENT PA (parametro_e)? PC DEV PA LOG IDENT PC
+
+
+parametros_e : parametro_e (COMA parametros_e)*
+parametro_e : tipo IDENT;
+
+parametros_s_f : parametro_s_f (COMA parametros_s_f)?
+parametro_s_f   : (NUM | seq_entera | seq_logica) IDENT
+
+
+
+procedimientos : PROCEDIMIENTO procedimientoAux variables instrucciones FPROCEDIMIENTO;
+
+procedimientoAux : IDENT PA (parametros_e)? PC
+
+
+
+instrucciones: INSTRUCCIONES (tipoInstruccion)*
+tipoInstruccion: (asignaciones | condiciones | iteracion | ruptura | mostrar | devolver)
+
+
+asignaciones: asignacion
+
+asignacion: IDENT (COMA IDENT)* ASIG expr PyC
+
+//declaramos las expresiones aritméticas
+
+expr : expr (POR | MAS | MENOS) expr
+        | expr COMA expr
+        | IDENT CA indice CC
+        | IDENT
+        | NUMERO
+        | CIERTO
+        | FALSO
+        | CA (seq_elems)? CC
+        | llamar_funcion
+
+
+indice	: NUMERO
+	    | IDENT
+	    | indice (POR | MAS | MENOS) indice
+
+
+seq_elems : NUMERO (COMA NUMERO)*
+		| (CIERTO | FALSO) (COMA ( CIERTO | FALSO))*
+
+
+
+
+//hemos declarado los tipo de funciones, podiendo llamar a otra funcion dentro de la misma
+llamar_funcion : IDENT PA llamar_funcion PC
+                | IDENT PA parametros_call_func PC
+
+
+parametros_call_func : v_param_call_func (COMA v_param_call_func)*
+                     | ()
+
+
+v_param_call_func :  NUMERO
+                    | CIERTO
+                    | FALSO
+                    | IDENT
+                    | CA (v_elems_seq) CC
+
+
+v_elems_seq : NUMERO (COMA NUMERO)*
+            | (CIERTO | FALSO) (COMA ( CIERTO | FALSO))*
+
+
+//declaramos las condiciones logicas
+
+condiciones: SI PA expr_cond PC ENTONCES bloque (SINO bloque)? FSI
+
+bloque : (tipoInstruccion)*
+
+expr_cond : comparador_izq operadores_log comparador_der ((CONJUNCION | DISYUNCION) expr_cond)?
+
+
+comparador_izq	: IDENT
+		| NUMERO
+		| IDENT CA indice CC
+
+
+comparador_der	: NUMERO
+		| CIERTO
+		| FALSO
+		| IDENT
+		| llamar_funcion
+
+operadores_log	: ( IGUAL | DISTINTO | MENOR | MAYOR | MENORIGUAL | MAYORIGUAL )
+
+
+//hemos declarado el bucle while con su salidas y rupturas
+iteracion : MIENTRAS PA expr_cond PC HACER (tipoInstruccion)* FMIENTRAS
+
+
+
+ruptura : RUPTURA PyC
+
+
+
+mostrar : MOSTRAR PA IDENT (COMA IDENT)? PC PyC
+
+
+
+devolver : DEV IDENT (COMA IDENT)* PyC
+            | DEV (CIERTO | FALSO) PyC
+            | DEV NUMERO PyC
