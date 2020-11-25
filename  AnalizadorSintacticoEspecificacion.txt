@@ -1,4 +1,4 @@
-programa : PROGRAMA secciones EOF;
+programa : PROGRAMA secciones EOF
 
 secciones : variables subprogramas instrucciones
 
@@ -39,14 +39,14 @@ predicado : IDENT PA (parametro_e)? PC DEV PA LOG IDENT PC
 
 
 parametros_e : parametro_e (COMA parametros_e)*
-parametro_e : tipo IDENT;
+parametro_e : tipo IDENT
 
 parametros_s_f : parametro_s_f (COMA parametros_s_f)?
 parametro_s_f   : (NUM | seq_entera | seq_logica) IDENT
 
 
 
-procedimientos : PROCEDIMIENTO procedimientoAux variables instrucciones FPROCEDIMIENTO;
+procedimientos : PROCEDIMIENTO procedimientoAux variables instrucciones FPROCEDIMIENTO
 
 procedimientoAux : IDENT PA (parametros_e)? PC
 
