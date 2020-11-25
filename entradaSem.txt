@@ -1,0 +1,38 @@
+PROGRAMA
+VARIABLES
+i,max,z:NUM;
+s:SEQ(NUM);
+
+SUBPROGRAMAS
+FUNCION mayor(SEQ(NUM) s) dev (NUM i, NUM max)
+//FUNCION mayor(SEQ(NUM) s) dev (NUM i)
+VARIABLES
+j: NUM;
+INSTRUCCIONES
+/*
+j=0;
+max=s[j];
+mientras(j<=ultima_posicion(s)) hacer
+si (s[j]>max) entonces
+max=s[j];
+i=j;
+fsi
+j=j+1;
+fmientras
+dev max,i; //retorno de parámetros de salida.
+*/
+FFUNCION
+
+
+INSTRUCCIONES
+
+//i,max = 5,T;
+i,max = mayor(s);
+//i,max = 5+9,z;
+//i,max,z = 2*1+3,2,5*5*5;
+
+//z=mayor();
+
+
+
+
