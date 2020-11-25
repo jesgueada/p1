@@ -1,0 +1,74 @@
+==================================================================================================================
+
+                             Especificación del Analizador léxico lenguaje P
+
+====================================================================================================================
+
+
+
+**************************************************
+               LEXEMAS AUXILIARES
+**************************************************
+ DIGITO: [0-9]
+ LETRA:[a-zA-Z]
+ BARRABAJA: '_'
+
+
+**************************************************
+              LEXEMAS NO AUXILIARES
+**************************************************
+
+ BLANCO: ' '
+ TABULADOR: '\t'
+ FIN_LINEA: '\r'?'\n'
+ BTF: (' '|'\t'|'\r'?'\n') //Como alternativa a las 3 líneas anteriores
+ NUM: 'NUM'
+ LOG: 'LOG'
+ SEQ: 'SEQ'
+ PROGRAMA: 'PROGRAMA'
+ VARIABLES: 'VARIABLES'
+ SUBPROGRAMAS: 'SUBPROGRAMAS'
+ FUNCION: 'FUNCION';
+ FFUNCION: 'FFUNCION';
+ PROCEDIMIENTO: 'PROCEDIMIENTO'
+ FPROCEDIMIENTO: 'FPROCEDIMIENTO'
+ INSTRUCCIONES: 'INSTRUCCIONES'
+ // ASIGNACIONES: 'ASIGNACIONES'
+ MOSTRAR: 'mostrar'
+ RUPTURA: 'ruptura'
+ DEV: 'dev'
+ CIERTO: 'T'
+ FALSO: 'F'
+ NUMERO : ('-')?DIGITO+
+ PA : '('
+ PC : ')'
+ CA: '['
+ CC: ']'
+ PyC : ';'
+ COMA : ','
+ ASIG: '='
+ DP: ':'
+ MAYOR: '>'
+ MENOR: '<'
+ IGUAL: '=='
+ DISTINTO: '!='
+ MENORIGUAL: '<='
+ MAYORIGUAL: '>='
+ CONJUNCION: '&&'
+ DISYUNCION: '||'
+ NEGACION: '!'
+ MAS: '+'
+ MENOS: '-'
+ POR: '*'
+ DIV: '/'
+ SI: 'si'
+ SINO: 'sino'
+ ENTONCES: 'entonces'
+ FSI: 'fsi'
+ MIENTRAS: 'mientras'
+ FMIENTRAS: 'fmientras'
+ HACER: 'hacer'
+ BARRABAJA: '_'
+ IDENT : LETRA(LETRA|DIGITO|BARRABAJA)*
+ COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip
+ COMENTARIO_LINEA : '//' .*? FIN_LINEA -> skip
