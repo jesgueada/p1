@@ -1,0 +1,27 @@
+PROGRAMA
+VARIABLES
+//----------PRUEBA DE OBJETIVO 1.1
+a:NUM;
+
+//----------PRUEBA DE OBJETIVO 1.2
+//a:NUM; //Error, c ya esta declarada en el almacen
+
+//----------PRUEBA DE OBJETIVO 1.3
+c:NUM;
+d:NUM;
+
+i,z:NUM;
+s:SEQ(NUM);
+
+SUBPROGRAMAS
+
+INSTRUCCIONES
+
+//----------PRUEBA DE OBJETIVO 1.1
+a=1;     //Correcto, a si está declarada en el almacen de variables
+//b=2;   //Error, b no esta declarada en el almacen de variables
+
+//----------PRUEBA DE OBJETIVO 1.3
+c=1;
+d=c+1;      //Correcto, c si esta declarada en el almacen de variables
+//d=f+1;    //Error, f no estadeclarada en el almacen de variables
