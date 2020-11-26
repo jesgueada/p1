@@ -24,6 +24,7 @@ public class test_anasem {
         System.out.println("=========   MAIN   ===========");
         System.out.println("Almacén de variables declaradas\n"+anasemListener.getAlmacen_variables_declaradas());
         System.out.println("Almcaén de subprogramas\n"+anasemListener.getAlmacen_subprogramas());
+//        System.out.println("Almacen de subprogramas-entrada\n"+anasemListener.get);
 
 
     }

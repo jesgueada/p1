@@ -12,6 +12,7 @@ public class Anasem_listener extends AnasintBaseListener {
 
     public void exitDecl_vars(Anasint.Decl_varsContext ctx){
         String tipo = ctx.tipo().getText();
+       // System.out.println(ctx.tipo().getText());
         //Añadir par variable-tipo
         exitVars(ctx.vars(),tipo);
     }
@@ -53,7 +54,7 @@ public class Anasem_listener extends AnasintBaseListener {
 
             if(ctx.expr().getChildCount() > 1) {     //Expr: expr COMA expr
                 for (int j = 0; j < ctx.expr().getChildCount(); j++) {
-                    System.out.println(j + " : " + ctx.expr().getChild(j).getText() + " (" + visitador.visit(ctx.expr().getChild(j)) + ")");
+                   // System.out.println(j + " : " + ctx.expr().getChild(j).getText() + " (" + visitador.visit(ctx.expr().getChild(j)) + ")");
                     if (!(ctx.expr().getChild(j).getText().equals(","))) {
                         ls_tiposAdev.add(visitador.visit(ctx.expr().getChild(j)));
                     }
@@ -64,8 +65,10 @@ public class Anasem_listener extends AnasintBaseListener {
                 int numTiposDev = visitador.almacen_subprogramas.get(nombreFuncOpred).size();
 
 
-                if(ctx.IDENT().size() > numTiposDev){  //DESICIÓN 3.8
-                    throw new IllegalArgumentException("ERROR: La función o predicado ->"+nombreFuncOpred+"<- devuelve menos elementos " +
+                if(ctx.IDENT().size() > numTiposDev){  //DECISIÓN 3.8
+                   // throw new IllegalArgumentException("ERROR: La función o predicado ->"+nombreFuncOpred+"<- devuelve menos elementos " +
+                    //        "que variables asignadas.");
+                    System.out.println("ERROR: La función o predicado ->"+nombreFuncOpred+"<- devuelve menos elemenos "+
                             "que variables asignadas.");
                 }else{
 
@@ -128,13 +131,18 @@ public class Anasem_listener extends AnasintBaseListener {
     public void exitFuncionAuxFunc(Anasint.FuncionAuxFuncContext ctx){
         String identFunc = ctx.funcion().IDENT().getText();
         List<String>ls_tipos_a_dev = new ArrayList<>();
+        añadirPar_ParamEntrada_tipos_func(ctx.funcion().parametros_e(),identFunc);
+       // System.out.println(visitador.getAlmacen_subprogramas_entrada);
 
         //System.out.println(ctx.funcion().parametros_e().getChild(0).getText());
         boolean checkerType = comprobarParamEntrada(ctx.funcion().parametros_e(),identFunc);
-
+        //int tam_param_entrada = ctx.funcion().parametros_e().getChildCount();
         int tam_param_salida = ctx.funcion().parametros_s_f().getChildCount();
+        //System.out.println(identFunc + "-"+tam_param_entrada);
         //System.out.println(identFunc +"-"+tam_parametros);
         //System.out.println(ctx.funcion().parametros_s_f().getChild(2).getChild(0).getChild(0).getText());
+
+
 
         if( tam_param_salida > 1){
             String primerTipoAdev = ctx.funcion().parametros_s_f().getChild(0).getChild(0).getText();
@@ -167,7 +175,8 @@ public class Anasem_listener extends AnasintBaseListener {
         }
         //Las funciones tienen un conjunto no vacio de parametros de salida
         if(tam_param_salida == 0){
-            throw new IllegalArgumentException("La función ->"+identFunc+"<- no devuelve nada");
+          //  throw new IllegalArgumentException("La función ->"+identFunc+"<- no devuelve nada");
+            System.out.println("La función ->"+identFunc+"<- no devuelve nada");
         }
     }
 
@@ -183,37 +192,9 @@ public class Anasem_listener extends AnasintBaseListener {
 
     public void exitProcedimientoAux(Anasint.ProcedimientoAuxContext ctx){
         String ident_proc = ctx.IDENT().getText();
-        //System.out.println(ident_proc);
+        //System.out.println("Prueba: "+ ident_proc);
         //NO DEVUELVE NADA -->Añadir null al almacen_subproblemas el par nombre_funcion - tipos_a_devolver
         visitador.almacen_subprogramas.put(ident_proc,null);
-    }
-
-    public void  exitExprLlamadaFunc(Anasint.ExprLlamadaFuncContext ctx){
-        String ident_func = ctx.start.getText();
-        int numTiposDevFunc = visitador.almacen_subprogramas.get(ident_func).size();
-        int numParam = ctx.llamar_funcion().parametros_call_func().v_param_call_func().size();
-
-        //DECISION DE DISEÑO 4.2
-        if(numTiposDevFunc != numParam){
-            throw new IllegalArgumentException("ERROR: No coincide el número de parametros"+
-                    " de entrada de la función");
-        }else{
-
-            //RECORRER LOS PARAMETROS DE ENTRADA
-            for(int i = 0; i < numTiposDevFunc;i++){
-                String tipoParamLLamada = ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(i).getText();
-                String tipoParamFunc = visitador.almacen_subprogramas.get(ident_func).get(i);
-
-                //DECISION DE DISEÑO 4.1
-                if (!(tipoParamFunc.equals(tipoParamLLamada))) {
-                    System.out.println("ERROR: Los tipos de los parametros son erroneos");
-                    break;
-                }
-            }
-        }
-
-        //System.out.println(ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(1).getText());
-
     }
 
     public Map<String,String> getAlmacen_variables_declaradas(){
@@ -223,6 +204,55 @@ public class Anasem_listener extends AnasintBaseListener {
     public Map<String,List<String>> getAlmacen_subprogramas(){
         return visitador.almacen_subprogramas;
     }
+
+
+    public void  exitExprLlamadaFunc(Anasint.ExprLlamadaFuncContext  ctx){
+        String ident_func = ctx.start.getText();
+
+        int numParam = ctx.llamar_funcion().parametros_call_func().v_param_call_func().size();
+        int numTiposEntFunc = visitador.getAlmacen_subprogramas_entrada.get(ident_func).size();
+        int linea = ctx.start.getLine();
+
+        //DECISION DE DISEÑO 4.2
+        // Debería comparar los valores de entrada no los de salida
+        if(numTiposEntFunc != numParam){
+            System.out.println("ERROR: No coincide el número de parámetros de entrada de la función ->"+ ident_func +"<- en la línea: "+ linea );
+            //throw new IllegalArgumentException("ERROR: No coincide el número de parametros"+
+            //        " de entrada de la función");
+        }else{
+
+           // Map<String, String> listaVariables = visitador.getAlmacen_variables_declaradas();
+           // System.out.println(listaVariables);
+
+            //RECORRER LOS PARAMETROS DE ENTRADA
+            //TODO:  Cambiar guarda
+            for(int i = 0; i < numTiposEntFunc;i++){
+                //String tipoParamLLamada = ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(i).getText();
+                //String tipoParamFunc = visitador.almacen_subprogramas.get(ident_func).get(i);
+                String tipoParamFunc = visitador.getAlmacen_subprogramas_entrada.get(ident_func).get(i);
+                String paramLLamada = ctx.llamar_funcion().parametros_call_func().getText();
+                if (!visitador.getAlmacen_variables_declaradas().containsKey(paramLLamada)) {
+                    System.out.println("ERROR: la variable ->"+paramLLamada+"<- no existe");
+                } else {
+                    String tipoParamLLamada = visitador.getAlmacen_variables_declaradas().get(paramLLamada);
+                  //  System.out.println(tipoParamLLamada);
+                   // System.out.println(tipoParamFunc);
+                    //DECISION DE DISEÑO 4.1
+                    if (!(tipoParamFunc.equals(tipoParamLLamada))) {
+                        System.out.println("ERROR: Los tipos de los parametros son erroneos");
+                        break;
+                    }
+                }
+
+
+            }
+        }
+
+        //System.out.println(ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(1).getText());
+
+    }
+
+
 
     public boolean comprobarParamEntrada (Anasint.Parametros_eContext p, String f){
         for(int i = 0; i <p.getChildCount();i++){
@@ -242,4 +272,36 @@ public class Anasem_listener extends AnasintBaseListener {
         }
         return true;
     }
+    // PARAMETROS DE ENTRADA
+    public void añadirPar_ParamEntrada_tipos_func(Anasint.Parametros_eContext p, String f){
+        List<String> ls_tipos_entrada = new ArrayList<>();
+
+        for(int i = 0; i <p.getChildCount();i++){
+            String nodoDeP = p.getChild(i).getText();
+
+            if(!(nodoDeP.equals(","))){
+                //String tipoDelParam = p.getChild(i).getText();
+
+                if(p.getChild(i).getChildCount() > 1){
+                    //Seria un tipo seq  : parametros_e->parametro_e->tipo->seq_entera o seq_log -> SEQ + ( + NUM/LOG + )
+                    String tipo_param = p.getChild(i).getChild(0).getChild(0).getText();
+
+                    //ident : parametros_e-->parametro_e->Ident
+                    String ident_param = p.getChild(i).getChild(1).getText();
+
+                    ls_tipos_entrada.add(tipo_param);
+
+                    //System.out.println(ident_param+"-"+tipo_param);
+
+                }else{
+                    String ident_param = p.getChild(i).getChild(0).getChild(1).getText();
+                    String tipo_param = p.getChild(i).getChild(0).getChild(0).getText();
+                    //System.out.println(ident_param+"-"+tipo_param);
+                    ls_tipos_entrada.add(tipo_param);
+                }
+            }
+        }
+        visitador.getAlmacen_subprogramas_entrada.put(f,ls_tipos_entrada);
+    }
+
 }
