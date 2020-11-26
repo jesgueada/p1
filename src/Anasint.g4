@@ -58,7 +58,7 @@ procedimientoAux : IDENT PA (parametros_e)? PC ;
 //INSTRUCCIONES
 
 instrucciones: INSTRUCCIONES (tipoInstruccion)*;
-tipoInstruccion: (asignaciones | condiciones | iteracion | ruptura | mostrar | devolver);
+tipoInstruccion: (asignaciones | llamar_procedimiento | condiciones | iteracion | ruptura | mostrar | devolver);
 
 //INSTRUCCIONES:ASIGNACIONES
 asignaciones: asignacion;
@@ -117,7 +117,7 @@ seq_elems : NUMERO (COMA NUMERO)*					//No dice nada de asig multiple para seq
 		| (CIERTO | FALSO) (COMA ( CIERTO | FALSO))*
 	;
 
-//INTRUCCIONES: LLAMAR_FUNCION
+
 
 llamar_funcion : IDENT PA llamar_funcion PC         // funcion anidada f(f(x))
                 | IDENT PA parametros_call_func PC
@@ -137,6 +137,9 @@ v_param_call_func :  NUMERO
 v_elems_seq : NUMERO (COMA NUMERO)*
             | (CIERTO | FALSO) (COMA ( CIERTO | FALSO))*
         ;
+
+//INTRUCCIONES: LLAMAR_FUNCION
+llamar_procedimiento : llamar_funcion PyC;
 
 //INSTRUCCIONES: CONDICIONAL
 

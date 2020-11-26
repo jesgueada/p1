@@ -1,0 +1,36 @@
+PROGRAMA
+VARIABLES
+//----------PRUEBA DE OBJETIVO 2
+//i:LOG;
+i:NUM;
+//----------PRUEBA DE OBJETIVO 3
+j,max:NUM;
+
+s,n:SEQ(NUM);
+l:SEQ(LOG);
+
+//----------PRUEBA DE OBJETIVO 4
+
+FUNCION menor(SEQ(NUM) n) dev (NUM j, NUM max)
+PROCEDIMIENTO esmultiplo(SEQ(NUM) n) dev (NUM p)
+
+SUBPROGRAMAS
+FUNCION mayor(SEQ(NUM) n) dev (NUM j, NUM max)
+VARIABLES
+INSTRUCCIONES
+FFUNCION
+
+INSTRUCCIONES
+//----------PRUEBA DE OBJETIVO 2
+i=0;
+
+//----------PRUEBA DE OBJETIVO 3
+
+s=[1,2,3,4,T];
+n=[1,2,3,4];
+//l=[a,b,c];
+
+max = mayor(n);
+
+
+

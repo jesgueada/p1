@@ -7,7 +7,7 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
 
     public Map<String, String> almacen_variables_declaradas = new HashMap<>();        //Par: Variable-tipo
     public Map<String, List<String>> almacen_subprogramas = new HashMap<>();//Par: nomFunc - ls_tipos a devolver
-    public Map<String, List<String>> getAlmacen_subprogramas_entrada = new HashMap<>();   //Par: numFunc-ls_tipos de entrada
+    public Map<String, List<String>> almacen_subprogramas_entrada = new HashMap<>();   //Par: numFunc-ls_tipos de entrada
 
     //DISEÑO 3: CÁLCULAR EL TIPO DE LAS EXPRESIONES (visitExpr)
 
@@ -15,19 +15,24 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
         String parteIzq = visit(ctx.expr(0));
         String parteDer = visit(ctx.expr(1));
 
+        if(parteIzq == null){
+            return "Indefinido";
+        }
+
         if(parteIzq.equals(parteDer)){
             return parteIzq;
-        }else{
+        } else{
             return "Indefinido";
         }
     }
 
     public String visitExprSegunContSeq(Anasint.ExprSegunContSeqContext ctx){
         String seqEnAsign = ctx.IDENT().getText(); // IDENT CA...CC
-
+        int linea = ctx.start.getLine();
         //Decision 1.4
         if (!varEstaDeclarada(seqEnAsign)) {
-            throw new IllegalArgumentException("Secuencia: ->"+seqEnAsign+"<- no declarada");
+            //throw new IllegalArgumentException("Secuencia: ->"+seqEnAsign+"<- no declarada");
+            System.out.println("Secuencia: -> "+seqEnAsign+"<- no declarada en línea: "+linea);
         }
 
         String tipoDeLaExpr = almacen_variables_declaradas.get(seqEnAsign);
@@ -44,10 +49,12 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
     public String visitExprVar(Anasint.ExprVarContext ctx){
         String varComoAsign = ctx.IDENT().getText();
         //System.out.println(varComoAsign);
+        int linea = ctx.start.getLine();
 
         //Decision 1.3
         if (!varEstaDeclarada(varComoAsign)) {
-            throw new IllegalArgumentException("Variable: ->"+varComoAsign+"<- no declarada");
+            //throw new IllegalArgumentException("Variable: ->"+varComoAsign+"<- no declarada");
+            System.out.println("Variable: ->"+varComoAsign+"<- no declarada en línea: "+linea);
         }
         String tipoDeLaExpr = almacen_variables_declaradas.get(varComoAsign);
 
@@ -67,20 +74,22 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
     }
 
     public String visitExprSeq(Anasint.ExprSeqContext ctx){
-
+        int linea = ctx.start.getLine();
         //DISEÑO 3.4 : Comprobar que coincidan los tipos de los elementos de una secuencia.
-
-        if(!(ctx.seq_elems().CIERTO().isEmpty()) && ctx.seq_elems().NUMERO().isEmpty()){
-            return "SEQ(LOG)";
-        }else if(!(ctx.seq_elems().FALSO().isEmpty()) && ctx.seq_elems().NUMERO().isEmpty()){
-            return "SEQ(LOG)";
-        }else if(!(ctx.seq_elems().NUMERO().isEmpty())
-                    && ((ctx.seq_elems().CIERTO().isEmpty()) && (ctx.seq_elems().FALSO().isEmpty()))){
-            return "SEQ(NUM)";
-        }else{
-            return "Indefinido";
+        if(ctx.seq_elems() != null) {
+            if (!(ctx.seq_elems().CIERTO().isEmpty()) && ctx.seq_elems().NUMERO().isEmpty()) {
+                return "SEQ(LOG)";
+            } else if (!(ctx.seq_elems().FALSO().isEmpty()) && ctx.seq_elems().NUMERO().isEmpty()) {
+                return "SEQ(LOG)";
+            } else if (!(ctx.seq_elems().NUMERO().isEmpty())
+                    && ((ctx.seq_elems().CIERTO().isEmpty()) && (ctx.seq_elems().FALSO().isEmpty()))) {
+                return "SEQ(NUM)";
+            } else {
+                return "Indefinido " + linea;
+            }
+        } else {
+            return "Null";
         }
-
     }
 
     //variables NO MULTIPLES
@@ -91,10 +100,10 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
         //¿EStá en subprograma?
         if(!(almacen_subprogramas.containsKey(nombreFuncOproc))){
             System.out.println("ERROR : la funcion o procedimiento ->"+nombreFuncOproc+
-                                    "<- no está en subprogramas.");
+                    "<- no está en subprogramas.");
             return "Indefinido";
         }else{
-            if(almacen_subprogramas.get(nombreFuncOproc).equals(null)){
+            if(almacen_subprogramas.get(nombreFuncOproc).isEmpty()){
                 System.out.println("ERROR: el procedimiento ->"+nombreFuncOproc+ "<- devuelve void.");
                 return "Indefinido";
             }else{
@@ -143,7 +152,8 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
     public String tipoDeVar(String var){
         //Decision 1.3
         if (!varEstaDeclarada(var)) {
-            throw new IllegalArgumentException("Variable: ->"+var+"<- no declarada");
+            // throw new IllegalArgumentException("Variable: ->"+var+"<- no declarada");
+            System.out.println("Variable: ->"+var+"<- no declarada");
         }
         return almacen_variables_declaradas.get(var);
     }
