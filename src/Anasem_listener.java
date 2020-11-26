@@ -19,6 +19,7 @@ public class Anasem_listener extends AnasintBaseListener {
 
     //Obtener variable
     public void exitVars(Anasint.VarsContext ctx,String tipo){
+        int linea = ctx.start.getLine();
         if(ctx.getChildCount()>1){
             //System.out.println(ctx.IDENT().getText());
             visitador.almacen_variables_declaradas.put(ctx.IDENT().getText(),tipo);
@@ -28,7 +29,7 @@ public class Anasem_listener extends AnasintBaseListener {
             //Diseño 2: Identificador,de la variable, duplicado en VARIABLES
             String ident_var = ctx.IDENT().getText();
             if(visitador.almacen_variables_declaradas.containsKey(ident_var)){
-                System.out.println("ERROR: "+ident_var+ "ya existe.");
+                System.out.println("ERROR: "+ident_var+ " ya existe. Error en la línea: "+linea);
             }
 
             visitador.almacen_variables_declaradas.put(ident_var,tipo);
@@ -42,9 +43,9 @@ public class Anasem_listener extends AnasintBaseListener {
         //			   de su identificador  en :  almacen_variables_declaradas
 
         //Cuando hay IDENT(COMA IDENT)?   -> IDENT pasa a ser una lista de nodos en el que tiene incluido null.
-
+        int linea = ctx.start.getLine();
         if (ctx.IDENT().size() > 2){
-            System.out.println("ERROR: No se permiten más de dos asignaciones multiples "+ctx.IDENT());
+            System.out.println("ERROR: No se permiten más de dos asignaciones multiples "+ctx.IDENT()+ " en línea: "+ linea);
 
         }else if (ctx.IDENT().size() > 1 && ctx.IDENT().size() <3) {
 
@@ -69,7 +70,7 @@ public class Anasem_listener extends AnasintBaseListener {
                    // throw new IllegalArgumentException("ERROR: La función o predicado ->"+nombreFuncOpred+"<- devuelve menos elementos " +
                     //        "que variables asignadas.");
                     System.out.println("ERROR: La función o predicado ->"+nombreFuncOpred+"<- devuelve menos elemenos "+
-                            "que variables asignadas.");
+                            "que variables asignadas. En línea: "+linea);
                 }else{
 
                     for(int i = 0; i < numTiposDev; i++){
@@ -87,22 +88,23 @@ public class Anasem_listener extends AnasintBaseListener {
 
                 //DISEÑO 1.4
                 if (!visitador.almacen_variables_declaradas.containsKey(varDeAsignacion)) {
-                    System.out.println("ERROR : " + varDeAsignacion + " no está declarada");
+                    System.out.println("ERROR1 : " + varDeAsignacion + " no está declarada. En línea: "+linea);
                 }
                 //DISEÑO 3
                 if(!(visitador.almacen_variables_declaradas.get(varDeAsignacion).equals(ls_tiposAdev.get(i)))){
                     System.out.println("ERROR: el tipo de ->"+varDeAsignacion+"<- no coincide con su asignacion ("
-                                            +ls_tiposAdev.get(i)+")");
+                                            +ls_tiposAdev.get(i)+") En línea: "+ linea);
                 }
             }
 
         } else {
             String varDeAsignacion = ctx.start.getText();
             //System.out.println(ctx.start.getText());
+            //System.out.println(ctx.start.getText());
 
             //DISEÑO 1.4
             if (!visitador.almacen_variables_declaradas.containsKey(varDeAsignacion)) {
-                System.out.println("ERROR : " + varDeAsignacion + " no está declarada");
+                System.out.println("ERROR : " + varDeAsignacion + " no está declarada. En línea: "+linea);
             }
 
             //DISEÑO 3
@@ -110,16 +112,18 @@ public class Anasem_listener extends AnasintBaseListener {
             String centinela = visitador.visit(ctx.expr());
             String tipoDeVar = visitador.almacen_variables_declaradas.get(varDeAsignacion);
 
-            //Coincide el el tipo de var y su expresion?
-            if(!(tipoDeVar.equals(centinela))){
-                System.out.println("Par:" + varDeAsignacion+"("+tipoDeVar+")"+ "- Tipo de expr: "+ centinela);
-                System.out.println("ERROR : "+ "La variable -> "+ varDeAsignacion +
-                        " <- no coincide con el tipo de su expresion");
-                System.out.println("        "+tipoDeVar +" != "+ centinela);
-            }else if(tipoDeVar.equals("Indefinido")){
-                System.out.println("Par:" + varDeAsignacion+"("+tipoDeVar+")"+ "- Tipo de expr: "+ centinela);
-                System.out.println("ERROR : "+ "La variable -> "+ varDeAsignacion +
-                        " <- no coincide con el tipo de su expresion");
+            if(tipoDeVar != null) {
+                //Coincide el el tipo de var y su expresion?
+                if (!(tipoDeVar.equals(centinela))) {
+                    System.out.println("Par:" + varDeAsignacion + "(" + tipoDeVar + ")" + "- Tipo de expr: " + centinela + " En línea: " + linea);
+                    System.out.println("ERROR : " + "La variable -> " + varDeAsignacion +
+                            " <- no coincide con el tipo de su expresion. En linea: " + linea);
+                    System.out.println("        " + tipoDeVar + " != " + centinela);
+                } else if (tipoDeVar.equals("Indefinido")) {
+                    System.out.println("Par:" + varDeAsignacion + "(" + tipoDeVar + ")" + "- Tipo de expr: " + centinela + " En línea: " + linea);
+                    System.out.println("ERROR : " + "La variable -> " + varDeAsignacion +
+                            " <- no coincide con el tipo de su expresion. En línea: " + linea);
+                }
             }
 
         }
@@ -230,16 +234,17 @@ public class Anasem_listener extends AnasintBaseListener {
                 //String tipoParamLLamada = ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(i).getText();
                 //String tipoParamFunc = visitador.almacen_subprogramas.get(ident_func).get(i);
                 String tipoParamFunc = visitador.getAlmacen_subprogramas_entrada.get(ident_func).get(i);
-                String paramLLamada = ctx.llamar_funcion().parametros_call_func().getText();
+                String paramLLamada = ctx.llamar_funcion().parametros_call_func().v_param_call_func().get(i).getText();
+                String tipoParamLLamada = visitador.getAlmacen_variables_declaradas().get(paramLLamada);
                 if (!visitador.getAlmacen_variables_declaradas().containsKey(paramLLamada)) {
-                    System.out.println("ERROR: la variable ->"+paramLLamada+"<- no existe");
+                    //System.out.println(paramLLamada);
+                    System.out.println("ERROR: la variable ->"+paramLLamada+"<- no existe, en la línea: "+linea);
                 } else {
-                    String tipoParamLLamada = visitador.getAlmacen_variables_declaradas().get(paramLLamada);
                   //  System.out.println(tipoParamLLamada);
                    // System.out.println(tipoParamFunc);
                     //DECISION DE DISEÑO 4.1
                     if (!(tipoParamFunc.equals(tipoParamLLamada))) {
-                        System.out.println("ERROR: Los tipos de los parametros son erroneos");
+                        System.out.println("ERROR: Los tipos de los parametros son erroneos. En línea "+linea);
                         break;
                     }
                 }
