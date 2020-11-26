@@ -157,7 +157,7 @@ public class Anasem_listener extends AnasintBaseListener {
                 if(!token.equals(",")){
                     //System.out.println(ctx.funcion().parametros_s_f().getChild(i).getChild(0).getChild(0).getText());
 
-                    System.out.println("Salida:"+ctx.funcion().parametros_s_f().getChild(i).getText());
+                    //System.out.println("Salida:"+ctx.funcion().parametros_s_f().getChild(i).getText());
                     ls_tipos_a_dev.add(ctx.funcion().parametros_s_f().getChild(i).getChild(0).getChild(0).getText());
 
 
