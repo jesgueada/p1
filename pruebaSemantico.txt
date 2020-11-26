@@ -11,7 +11,8 @@ n:SEQ(NUM);
 l:SEQ(LOG);
 
 FUNCION menor(SEQ(NUM) n) dev (NUM j, NUM max)
-PROCEDIMIENTO esmultiplo(SEQ(NUM)) dev (NUM j)
+PROCEDIMIENTO esmultiplo(SEQ(NUM) n) dev (NUM p)
+
 SUBPROGRAMAS
 FUNCION mayor(SEQ(NUM) n) dev (NUM j, NUM max)
 VARIABLES
@@ -29,3 +30,5 @@ n=[1,2,3,4];
 //l=[a,b,c];
 
 j,max = mayor(n);
+
+//----------PRUEBA DE OBJETIVO 4
