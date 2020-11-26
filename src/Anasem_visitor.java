@@ -6,7 +6,8 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
 
 
     public Map<String, String> almacen_variables_declaradas = new HashMap<>();        //Par: Variable-tipo
-    public Map<String, List<String>> almacen_subprogramas = new HashMap<>();         //Par: nomFunc - ls_tipos a devolver
+    public Map<String, List<String>> almacen_subprogramas = new HashMap<>();//Par: nomFunc - ls_tipos a devolver
+    public Map<String, List<String>> getAlmacen_subprogramas_entrada = new HashMap<>();   //Par: numFunc-ls_tipos de entrada
 
     //DISEÑO 3: CÁLCULAR EL TIPO DE LAS EXPRESIONES (visitExpr)
 
@@ -146,5 +147,6 @@ public class Anasem_visitor extends AnasintBaseVisitor<String>{
         }
         return almacen_variables_declaradas.get(var);
     }
+
 
 }

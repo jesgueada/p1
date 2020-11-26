@@ -6,9 +6,10 @@ i:NUM;
 //----------PRUEBA DE OBJETIVO 3
 j,max:NUM;
 
-s:SEQ(NUM);
-n:SEQ(NUM);
+s,n:SEQ(NUM);
 l:SEQ(LOG);
+
+//----------PRUEBA DE OBJETIVO 4
 
 FUNCION menor(SEQ(NUM) n) dev (NUM j, NUM max)
 PROCEDIMIENTO esmultiplo(SEQ(NUM) n) dev (NUM p)
@@ -29,6 +30,7 @@ s=[1,2,3,4,T];
 n=[1,2,3,4];
 //l=[a,b,c];
 
-j,max = mayor(n);
+max = mayor(n);
 
-//----------PRUEBA DE OBJETIVO 4
+
+
